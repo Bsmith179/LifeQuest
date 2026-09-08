@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		28DECD5D3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DECD5C3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		2895297C30503FBC00C3ACFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -20,6 +24,7 @@
 		2895296530503FBC00C3ACFE /* LifeQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2895297B30503FBC00C3ACFE /* LifeQuestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeQuestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		289529AF305042CB00C3ACFE /* LifeQuestNoUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LifeQuestNoUI.xctestplan; sourceTree = "<group>"; };
+		28DECD5C3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-09-08 at 10.44.55 AM.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -73,6 +78,7 @@
 				2895296730503FBC00C3ACFE /* LifeQuest */,
 				2895297E30503FBC00C3ACFE /* LifeQuestTests */,
 				2895296630503FBC00C3ACFE /* Products */,
+				28DECD5C3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,6 +183,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28DECD5D3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
