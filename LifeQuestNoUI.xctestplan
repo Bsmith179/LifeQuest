@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "40A54473-2C7C-4BF4-B94B-D2AAFF64D858",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:LifeQuest.xcodeproj",
+      "identifier" : "2895296430503FBC00C3ACFE",
+      "name" : "LifeQuest"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LifeQuest.xcodeproj",
+        "identifier" : "2895297A30503FBC00C3ACFE",
+        "name" : "LifeQuestTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:LifeQuest.xcodeproj",
+        "identifier" : "2895298430503FBC00C3ACFE",
+        "name" : "LifeQuestUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

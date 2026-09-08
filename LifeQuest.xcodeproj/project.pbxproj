@@ -27,6 +27,7 @@
 		2895296530503FBC00C3ACFE /* LifeQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2895297B30503FBC00C3ACFE /* LifeQuestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeQuestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2895298530503FBC00C3ACFE /* LifeQuestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeQuestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		289529AF305042CB00C3ACFE /* LifeQuestNoUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LifeQuestNoUI.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -51,11 +52,6 @@
 		2895297E30503FBC00C3ACFE /* LifeQuestTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = LifeQuestTests;
-			sourceTree = "<group>";
-		};
-		2895298830503FBC00C3ACFE /* LifeQuestUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LifeQuestUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -88,9 +84,9 @@
 		2895295C30503FBC00C3ACFE = {
 			isa = PBXGroup;
 			children = (
+				289529AF305042CB00C3ACFE /* LifeQuestNoUI.xctestplan */,
 				2895296730503FBC00C3ACFE /* LifeQuest */,
 				2895297E30503FBC00C3ACFE /* LifeQuestTests */,
-				2895298830503FBC00C3ACFE /* LifeQuestUITests */,
 				2895296630503FBC00C3ACFE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,9 +161,6 @@
 			);
 			dependencies = (
 				2895298730503FBC00C3ACFE /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				2895298830503FBC00C3ACFE /* LifeQuestUITests */,
 			);
 			name = LifeQuestUITests;
 			packageProductDependencies = (
