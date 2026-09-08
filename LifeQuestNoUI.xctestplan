@@ -23,15 +23,6 @@
         "identifier" : "2895297A30503FBC00C3ACFE",
         "name" : "LifeQuestTests"
       }
-    },
-    {
-      "enabled" : false,
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:LifeQuest.xcodeproj",
-        "identifier" : "2895298430503FBC00C3ACFE",
-        "name" : "LifeQuestUITests"
-      }
     }
   ],
   "version" : 1

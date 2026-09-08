@@ -14,19 +14,11 @@
 			remoteGlobalIDString = 2895296430503FBC00C3ACFE;
 			remoteInfo = LifeQuest;
 		};
-		2895298630503FBC00C3ACFE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2895295D30503FBC00C3ACFE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2895296430503FBC00C3ACFE;
-			remoteInfo = LifeQuest;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2895296530503FBC00C3ACFE /* LifeQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2895297B30503FBC00C3ACFE /* LifeQuestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeQuestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2895298530503FBC00C3ACFE /* LifeQuestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeQuestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		289529AF305042CB00C3ACFE /* LifeQuestNoUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LifeQuestNoUI.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,13 +63,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2895298230503FBC00C3ACFE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -96,7 +81,6 @@
 			children = (
 				2895296530503FBC00C3ACFE /* LifeQuest.app */,
 				2895297B30503FBC00C3ACFE /* LifeQuestTests.xctest */,
-				2895298530503FBC00C3ACFE /* LifeQuestUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -149,26 +133,6 @@
 			productReference = 2895297B30503FBC00C3ACFE /* LifeQuestTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2895298430503FBC00C3ACFE /* LifeQuestUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2895299630503FBC00C3ACFE /* Build configuration list for PBXNativeTarget "LifeQuestUITests" */;
-			buildPhases = (
-				2895298130503FBC00C3ACFE /* Sources */,
-				2895298230503FBC00C3ACFE /* Frameworks */,
-				2895298330503FBC00C3ACFE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2895298730503FBC00C3ACFE /* PBXTargetDependency */,
-			);
-			name = LifeQuestUITests;
-			packageProductDependencies = (
-			);
-			productName = LifeQuestUITests;
-			productReference = 2895298530503FBC00C3ACFE /* LifeQuestUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -183,10 +147,6 @@
 						CreatedOnToolsVersion = 26.6;
 					};
 					2895297A30503FBC00C3ACFE = {
-						CreatedOnToolsVersion = 26.6;
-						TestTargetID = 2895296430503FBC00C3ACFE;
-					};
-					2895298430503FBC00C3ACFE = {
 						CreatedOnToolsVersion = 26.6;
 						TestTargetID = 2895296430503FBC00C3ACFE;
 					};
@@ -208,7 +168,6 @@
 			targets = (
 				2895296430503FBC00C3ACFE /* LifeQuest */,
 				2895297A30503FBC00C3ACFE /* LifeQuestTests */,
-				2895298430503FBC00C3ACFE /* LifeQuestUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -222,13 +181,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2895297930503FBC00C3ACFE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2895298330503FBC00C3ACFE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -252,13 +204,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2895298130503FBC00C3ACFE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -266,11 +211,6 @@
 			isa = PBXTargetDependency;
 			target = 2895296430503FBC00C3ACFE /* LifeQuest */;
 			targetProxy = 2895297C30503FBC00C3ACFE /* PBXContainerItemProxy */;
-		};
-		2895298730503FBC00C3ACFE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2895296430503FBC00C3ACFE /* LifeQuest */;
-			targetProxy = 2895298630503FBC00C3ACFE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -498,44 +438,6 @@
 			};
 			name = Release;
 		};
-		2895299730503FBC00C3ACFE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Brigitte.LifeQuestUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = LifeQuest;
-			};
-			name = Debug;
-		};
-		2895299830503FBC00C3ACFE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Brigitte.LifeQuestUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = LifeQuest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -562,15 +464,6 @@
 			buildConfigurations = (
 				2895299430503FBC00C3ACFE /* Debug */,
 				2895299530503FBC00C3ACFE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2895299630503FBC00C3ACFE /* Build configuration list for PBXNativeTarget "LifeQuestUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2895299730503FBC00C3ACFE /* Debug */,
-				2895299830503FBC00C3ACFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

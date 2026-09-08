@@ -9,11 +9,15 @@ import Testing
 @testable import LifeQuest
 
 struct LifeQuestTests {
-
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-        // Swift Testing Documentation
-        // https://developer.apple.com/documentation/testing
+    
+    @Test("Test Can Run")
+    func testEnvironment_IsRunningTests(){
+        #expect(true,"This test always passes")
     }
-
+    
+    @Test("MVVM Is Setup And Ready For Testing")
+    func testEnvironment_IsConfiguredAndRunning(){
+        let sut = CharacterViewModel()
+        #expect(sut.character.level == 1, "Character should start at level 1")
+    }
 }
