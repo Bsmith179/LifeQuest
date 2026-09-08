@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct CharacterViewModel: View {
+struct DashboardView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    CharacterViewModel()
+    DashboardView()
 }
