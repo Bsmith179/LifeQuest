@@ -172,11 +172,24 @@ struct CharacterViewModelsTests {
         (50,50,0),
         (50,100,0)
     ])
-func testDeductGold_RespectsZeroFloor(currentGold: Int, goldToAdd: Int, expectedResult: Int){
+    func testDeductGold_RespectsZeroFloor(currentGold: Int, goldToAdd: Int, expectedResult: Int){
+        let sut = CharacterViewModel()
+        sut.character.gold = currentGold
+    
+        sut.deductGold(amount: goldToAdd)
+    
+        #expect(sut.character.gold == expectedResult)
+}
+
+    @Test("Cannot deduct negative gold", arguments:
+    [
+        (100,-50,50),
+    ])
+    func testDeductGold_IgnoresNegativeInputs(currentGold: Int, goldToAdd: Int, expectedResult: Int){
     let sut = CharacterViewModel()
     sut.character.gold = currentGold
-    
+
     sut.deductGold(amount: goldToAdd)
-    
+
     #expect(sut.character.gold == expectedResult)
 }
