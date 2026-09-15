@@ -78,6 +78,8 @@ class CharacterViewModel: ObservableObject {
     }
     
     func addGold(amount: Int){
+        var amount = amount
+        amount = max(amount, 0)
         character.gold = min(character.gold + amount, goldThreshold)
     }
     

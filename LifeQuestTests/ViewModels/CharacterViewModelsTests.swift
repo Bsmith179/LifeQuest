@@ -139,8 +139,8 @@ struct CharacterViewModelsTests {
     @Test("Adding gold cannot exceed cap", arguments:
     [
         (100,50,150),
-        (99000,999,9999),
-        (99000,5000,9999)
+        (99000,999,99999),
+        (99000,5000,99999)
     ])
     func testAddGold_RespectsCap(currentGold: Int, goldToAdd: Int, expectedResult: Int){
         let sut = CharacterViewModel()
