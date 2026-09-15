@@ -11,14 +11,18 @@ import Combine
  
 class CharacterViewModel: ObservableObject {
     @Published var character = Character()
+    
     let xpThreshold: Int = 1000
-    
-    
-
-    func gainXp(amount: Int) {
+    func gainXP(amount: Int) {
         
+        character.currentXP += amount
+        while character.currentXP >= xpThreshold {
+            character.currentXP -= xpThreshold
+            character.level += 1
+        }
     }
     
+
     func checkLevelUp() {
         
     }

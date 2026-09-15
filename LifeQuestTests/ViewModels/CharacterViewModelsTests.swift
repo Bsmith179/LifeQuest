@@ -105,13 +105,13 @@ struct CharacterViewModelsTests {
     [
         (0,500,1,500),
         (500,500,2,0),
-        (800,200,5,300),
+        (800,500,2,300),
         (100,2400,3,500)
     ])
     func testGainXP_TriggersLevelUpAndRollover(currentXP: Int, xpToAdd: Int, expectedLevel: Int, expectedXP: Int){
         let sut = CharacterViewModel()
         sut.character.currentXP = currentXP
-        sut.gainXp(amount: xpToAdd)
+        sut.gainXP(amount: xpToAdd)
         
         #expect(sut.character.level == expectedLevel)
         #expect(sut.character.currentXP == expectedXP)
