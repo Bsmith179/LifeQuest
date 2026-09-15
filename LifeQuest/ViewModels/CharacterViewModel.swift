@@ -76,4 +76,11 @@ class CharacterViewModel: ObservableObject {
         }
     }
     
+    func addGold(amount: Int){
+        
+    }
+    
+    func deductGold(amount: Int){
+        
+    }
 }

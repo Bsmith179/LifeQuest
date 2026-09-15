@@ -134,4 +134,20 @@ struct CharacterViewModelsTests {
         #expect(sut.character.currentXP == expectedXP)
         
     }
+    
+    //MARK: - Add Gold
+    @Test("Adding gold cannot exceed cap", arguments:
+    [
+        (100,50,150),
+        (99000,999,9999),
+        (99000,5000,9999)
+    ])
+    func testAddGold_RespectsCap(currentGold: Int, goldToAdd: Int, expectedResult: Int){
+        let sut = CharacterViewModel()
+        sut.character.gold = currentGold
+        
+        sut.addGold(amount: goldToAdd)
+        
+        #expect(sut.character.gold == expectedResult)
+    }
 }
