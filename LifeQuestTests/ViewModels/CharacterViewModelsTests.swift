@@ -164,3 +164,19 @@ struct CharacterViewModelsTests {
         #expect(sut.character.gold == expectedResult)
     }
 }
+
+    //MARK: - Deduct Gold
+    @Test("Cannot deduct below zero", arguments:
+    [
+        (150,50,50),
+        (50,50,0),
+        (50,100,0)
+    ])
+func testDeductGold_RespectsZeroFloor(currentGold: Int, goldToAdd: Int, expectedResult: Int){
+    let sut = CharacterViewModel()
+    sut.character.gold = currentGold
+    
+    sut.deductGold(amount: goldToAdd)
+    
+    #expect(sut.character.gold == expectedResult)
+}
