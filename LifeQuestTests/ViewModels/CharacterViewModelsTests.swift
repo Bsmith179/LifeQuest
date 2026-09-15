@@ -46,4 +46,23 @@ struct CharacterViewModelsTests {
         #expect(sut.character.strength == expectedResult)
     }
     
+    @Test("Adding to strength must leave other categories unchanged", arguments:
+    [
+        (50,10,60),
+
+    ])
+    func testAddStat_ModifiesOnlyTargetCategory( startStat: Int, amountAdded: Int, expectedResult: Int){
+        //Arrange
+        let sut = CharacterViewModel()
+        sut.character.strength = startStat
+        
+        //Act
+        sut.addStat(category: .strength, amount: amountAdded)
+        
+        //Assert
+        #expect(sut.character.intelligence == 0)
+        #expect(sut.character.charisma == 0)
+        #expect(sut.character.focus == 0)
+    }
+    
 }
