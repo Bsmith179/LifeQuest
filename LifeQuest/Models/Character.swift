@@ -10,7 +10,7 @@ import Foundation
  
 struct Character {
     var level: Int = 1
-    var currentXp: Int = 0
+    var currentXP: Int = 0
     var gold: Int = 0
     
     var intelligence: Int = 0

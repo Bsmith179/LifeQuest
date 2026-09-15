@@ -10,6 +10,7 @@ import Testing
 
 struct CharacterViewModelsTests {
 
+    //MARK: - Add Stats
     @Test("Stats cannot exceed cap of 99", arguments:
     [
         (50,10,60),
@@ -65,6 +66,7 @@ struct CharacterViewModelsTests {
         #expect(sut.character.focus == 0)
     }
     
+    //MARK: - Deduct Stats
     @Test("Missing quest cannot cause stat to drop to negative numbers", arguments:
     [
         (10,5,5),
@@ -72,11 +74,15 @@ struct CharacterViewModelsTests {
         (3,5,0)
     ])
     func testDeductStat_RespectsZeroFloor(currentStat: Int, amountToDeduct: Int, expectedResult: Int){
+        
+        //Arrange
         let sut = CharacterViewModel()
         sut.character.strength = currentStat
         
+        //Act
         sut.deductStat(category: .strength, amount: amountToDeduct)
         
+        //Assert
         #expect(sut.character.strength == expectedResult)
     }
     
@@ -92,5 +98,23 @@ struct CharacterViewModelsTests {
         sut.deductStat(category: .strength, amount: amountToDeduct)
         
         #expect(sut.character.strength == expectedResult)
+    }
+    
+    //MARK: - GainXP
+    @Test("XP threshold is 1000, excess XP must carry over", arguments:
+    [
+        (0,500,1,500),
+        (500,500,2,0),
+        (800,200,5,300),
+        (100,2400,3,500)
+    ])
+    func testGainXP_TriggersLevelUpAndRollover(currentXP: Int, xpToAdd: Int, expectedLevel: Int, expectedXP: Int){
+        let sut = CharacterViewModel()
+        sut.character.currentXP = currentXP
+        sut.gainXp(amount: xpToAdd)
+        
+        #expect(sut.character.level == expectedLevel)
+        #expect(sut.character.currentXP == expectedXP)
+        
     }
 }
