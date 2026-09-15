@@ -150,4 +150,17 @@ struct CharacterViewModelsTests {
         
         #expect(sut.character.gold == expectedResult)
     }
+    
+    @Test("Cannot add negative gold", arguments:
+    [
+        (100,-50,100)
+    ])
+    func testAddGold_IgnoresNegativeInputs(currentGold: Int, goldToAdd: Int, expectedResult: Int){
+        let sut = CharacterViewModel()
+        sut.character.gold = currentGold
+        
+        sut.addGold(amount: goldToAdd)
+        
+        #expect(sut.character.gold == expectedResult)
+    }
 }
