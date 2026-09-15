@@ -168,7 +168,7 @@ struct CharacterViewModelsTests {
     //MARK: - Deduct Gold
     @Test("Cannot deduct below zero", arguments:
     [
-        (150,50,50),
+        (100,50,50),
         (50,50,0),
         (50,100,0)
     ])
