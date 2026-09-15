@@ -32,13 +32,15 @@ class CharacterViewModel: ObservableObject {
             break
             
         case .intelligence:
-            character.intelligence += amount
+            character.intelligence = min(character.intelligence + amount, maxCap)
             break
+            
         case .charisma:
-            character.charisma += amount
+            character.charisma = min(character.charisma + amount, maxCap)
             break
+            
         case .focus:
-            character.focus += amount
+            character.focus = min(character.focus + amount, maxCap)
             break
         }
     }
