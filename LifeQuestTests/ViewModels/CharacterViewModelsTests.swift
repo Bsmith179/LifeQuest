@@ -183,7 +183,7 @@ struct CharacterViewModelsTests {
 
     @Test("Cannot deduct negative gold", arguments:
     [
-        (100,-50,50),
+        (100,-50,100),
     ])
     func testDeductGold_IgnoresNegativeInputs(currentGold: Int, goldToAdd: Int, expectedResult: Int){
     let sut = CharacterViewModel()

@@ -84,7 +84,8 @@ class CharacterViewModel: ObservableObject {
     }
     
     func deductGold(amount: Int){
-     
+        var amount = amount
+        amount = max(amount, 0)
         character.gold = max(character.gold - amount, 0)
     }
 }
