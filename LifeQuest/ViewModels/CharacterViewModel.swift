@@ -49,6 +49,9 @@ class CharacterViewModel: ObservableObject {
     }
     
     func deductStat(category: StatCategory,  amount: Int) {
+        var amount = amount
+        amount = max(0,amount)
+        
         switch category {
         case .strength:
             character.strength = max(character.strength - amount, 0)
