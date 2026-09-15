@@ -13,6 +13,7 @@ class CharacterViewModel: ObservableObject {
     @Published var character = Character()
     
     let xpThreshold: Int = 1000
+    let goldThreshold: Int = 99999
     
     func gainXP(amount: Int) {
         var amount = amount
@@ -77,7 +78,7 @@ class CharacterViewModel: ObservableObject {
     }
     
     func addGold(amount: Int){
-        
+        character.gold = min(character.gold + amount, goldThreshold)
     }
     
     func deductGold(amount: Int){
