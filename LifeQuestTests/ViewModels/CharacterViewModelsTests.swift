@@ -29,4 +29,21 @@ struct CharacterViewModelsTests {
         #expect(sut.character.strength == expectedResult)
     }
 
+    @Test("Negative values should be ignored", arguments:
+    [
+        (10,-5,10),
+
+    ])
+    func testAddStat_IgnoresNegativeInputs( startStat: Int, amountAdded: Int, expectedResult: Int){
+        //Arrange
+        let sut = CharacterViewModel()
+        sut.character.strength = startStat
+        
+        //Act
+        sut.addStat(category: .strength, amount: amountAdded)
+        
+        //Assert
+        #expect(sut.character.strength == expectedResult)
+    }
+    
 }
