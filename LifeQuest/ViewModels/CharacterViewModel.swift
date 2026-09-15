@@ -15,7 +15,8 @@ class CharacterViewModel: ObservableObject {
     let xpThreshold: Int = 1000
     
     func gainXP(amount: Int) {
-        
+        var amount = amount
+        amount = max(0,amount)
         character.currentXP += amount
         checkLevelUp()
     }
