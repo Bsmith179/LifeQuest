@@ -65,4 +65,19 @@ struct CharacterViewModelsTests {
         #expect(sut.character.focus == 0)
     }
     
+    @Test("Missing quest cannot cause stat to drop to negative numbers", arguments:
+    [
+        (10,5,5),
+        (5,5,0),
+        (3,5,0)
+    ])
+    func testDeductStat_RespectsZeroFloor(currentStat: Int, amountToDeduct: Int, expectedResult: Int){
+        let sut = CharacterViewModel()
+        sut.character.strength = currentStat
+        
+        sut.deductStat(category: .strength, amount: amountToDeduct)
+        
+        #expect(sut.character.strength == expectedResult)
+    }
+    
 }
