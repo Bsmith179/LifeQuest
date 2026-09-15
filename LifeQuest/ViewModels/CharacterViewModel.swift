@@ -49,6 +49,23 @@ class CharacterViewModel: ObservableObject {
     }
     
     func deductStat(category: StatCategory,  amount: Int) {
-        
+        switch category {
+        case .strength:
+            character.strength = max(character.strength - amount, 0)
+            break
+            
+        case .intelligence:
+            character.intelligence = max(character.intelligence - amount, 0)
+            break
+            
+        case .charisma:
+            character.charisma = max(character.charisma - amount, 0)
+            break
+            
+        case .focus:
+            character.focus = max(character.focus - amount, 0)
+            break
+        }
     }
+    
 }

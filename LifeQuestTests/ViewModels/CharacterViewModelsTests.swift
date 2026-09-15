@@ -80,4 +80,5 @@ struct CharacterViewModelsTests {
         #expect(sut.character.strength == expectedResult)
     }
     
+    
 }
