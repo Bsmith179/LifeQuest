@@ -24,7 +24,10 @@ class CharacterViewModel: ObservableObject {
     }
     
     func addStat(category: StatCategory,  amount: Int) {
+        var amount = amount
         let maxCap: Int = 99
+        
+        amount = max(0,amount)
         
         switch category {
         case .strength:
