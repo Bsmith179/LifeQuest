@@ -111,6 +111,23 @@ struct CharacterViewModelsTests {
     func testGainXP_TriggersLevelUpAndRollover(currentXP: Int, xpToAdd: Int, expectedLevel: Int, expectedXP: Int){
         let sut = CharacterViewModel()
         sut.character.currentXP = currentXP
+        
+        sut.gainXP(amount: xpToAdd)
+        
+        #expect(sut.character.level == expectedLevel)
+        #expect(sut.character.currentXP == expectedXP)
+        
+    }
+    
+    @Test("Earning negative XP should not cause a level up or XP change", arguments:
+    [
+        (500,-100,1,500)
+ 
+    ])
+    func testGainXP_IgnoresNegativeInputs(currentXP: Int, xpToAdd: Int, expectedLevel: Int, expectedXP: Int){
+        let sut = CharacterViewModel()
+        sut.character.currentXP = currentXP
+        
         sut.gainXP(amount: xpToAdd)
         
         #expect(sut.character.level == expectedLevel)
