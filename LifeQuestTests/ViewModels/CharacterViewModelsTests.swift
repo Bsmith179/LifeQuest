@@ -80,5 +80,17 @@ struct CharacterViewModelsTests {
         #expect(sut.character.strength == expectedResult)
     }
     
-    
+    @Test("Must reject negative input", arguments:
+    [
+        (10,-5,10),
+
+    ])
+    func testDeductStat_IgnoresNegativeInputs(currentStat: Int, amountToDeduct: Int, expectedResult: Int){
+        let sut = CharacterViewModel()
+        sut.character.strength = currentStat
+        
+        sut.deductStat(category: .strength, amount: amountToDeduct)
+        
+        #expect(sut.character.strength == expectedResult)
+    }
 }
