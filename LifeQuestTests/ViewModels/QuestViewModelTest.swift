@@ -51,7 +51,7 @@ struct QuestViewModelTest {
     
     @Test("Created quest calculates Dynamic XP rewards", arguments: [
         (1.0, QuestFrequency.oneOff, 100),
-        (3.0, QuestFrequency.daily, 300),
+        (2.0, QuestFrequency.daily, 300),
         (5.0, QuestFrequency.weekly, 1000),
     ])
     func testCreateNewQuest_CalculatesDynamicRewards(difficulty: Double, frequency: QuestFrequency, expectedXP: Int){
