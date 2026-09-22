@@ -9,7 +9,7 @@ import Testing
 @testable import LifeQuest
 
 struct ShopViewModelTest {
-
+    
     @Test("Created Reward gets added to list")
     func testCreateReward_AddToActiveList(){
         
@@ -32,4 +32,24 @@ struct ShopViewModelTest {
         #expect(sut.availableRewards.count == 1)
         
     }
+    
+    @Test("Created Rewards cannot have a negative cost", arguments:
+    [
+        (50,50),
+        (0,0),
+        (-100,0)
+    ])
+    
+    func testCreateReward_PreventsNegativeCosts(goldCost: Int, expectedCount: Int){
+        
+        let sut = ShopViewModel()
+        
+        sut.createReward(name: "Test Reward", goldCost: goldCost)
+        
+        let cost: Int = sut.availableRewards.first!.goldCost
+        
+        #expect(cost == expectedCount)
+        #expect(cost >= 0)
+    }
+    
 }
