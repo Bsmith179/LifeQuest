@@ -33,4 +33,19 @@ struct QuestViewModelTest {
         
         #expect(sut.activeQuests.count == 1)
     }
+    
+    @Test("Created quest has a difficulty between 1.0 and 5.0", arguments: [
+        (0.0, 1.0),
+        (3.0, 3.0),
+        (5.0, 5.0),
+        (10.0, 5.0)
+    ])
+    func testCreateNewQuest_ClampsDifficultyBoundaries(difficulty: Double, expected: Double){
+        let sut = QuestViewModel()
+        
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: difficulty, frequency: .daily)
+        
+        let quest = sut.activeQuests.first!
+        #expect(quest.difficultyMultiplier == expected)
+    }
 }
