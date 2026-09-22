@@ -26,6 +26,7 @@ class ShopViewModel: ObservableObject {
     func purchaseReward(rewardID: UUID,  currentGold: Int) -> Bool {
         let reward = availableRewards.first(where: { $0.id == rewardID})
         if let reward, currentGold >= reward.goldCost {
+            availableRewards.removeAll(where:{ $0.id == rewardID })
             return true
         }
         return false

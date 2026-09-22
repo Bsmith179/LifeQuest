@@ -84,4 +84,6 @@ struct ShopViewModelTest {
         #expect(sut.availableRewards.count == 0)
     
     }
+    
+    
 }
