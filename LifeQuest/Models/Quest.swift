@@ -11,7 +11,7 @@ import Foundation
 struct Quest: Identifiable {
     let id = UUID()
     var title: String
-    var category: StatCategory
+    var categories: [StatCategory]
     var difficultyMultiplier: Double
     var frequency: QuestFrequency
     var isCompleted: Bool = false
