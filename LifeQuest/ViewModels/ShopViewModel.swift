@@ -14,6 +14,8 @@ class ShopViewModel: ObservableObject {
     @Published var availableRewards: [Reward] = []
     
     func createReward(name: String,  goldCost: Int) {
+        var goldCost = goldCost
+        goldCost = max(0, goldCost)
         if !availableRewards.contains(where: { $0.title == name}){
             
             let newReward = Reward(title: name, goldCost: goldCost)
