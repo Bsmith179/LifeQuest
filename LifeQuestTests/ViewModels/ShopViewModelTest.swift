@@ -52,4 +52,21 @@ struct ShopViewModelTest {
         #expect(cost >= 0)
     }
     
+    @Test("Must have enough gold to purchase", arguments:
+    [
+        (49,false),
+        (50,true),
+        (150,true)
+    ])
+    
+    func testPurchaseReward_PreventSequencBreaking(playerGold: Int, canAfford: Bool){
+        let sut = ShopViewModel()
+        sut.createReward(name: "Test Reward", goldCost: 10)
+        let rewardID = sut.availableRewards.first!.id
+        
+        let ableToPurchase = sut.purchaseReward(rewardID: rewardID, currentGold: playerGold)
+        
+        #expect(ableToPurchase == canAfford)
+    
+    }
 }
