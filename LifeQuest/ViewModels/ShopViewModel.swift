@@ -14,8 +14,11 @@ class ShopViewModel: ObservableObject {
     @Published var availableRewards: [Reward] = []
     
     func createReward(name: String,  goldCost: Int) {
-        let newReward = Reward(title: name, goldCost: goldCost)
-        availableRewards.append(newReward)
+        if !availableRewards.contains(where: { $0.title == name}){
+            
+            let newReward = Reward(title: name, goldCost: goldCost)
+            availableRewards.append(newReward)
+        }
     }
     
     func purchaseReward(rewardID: UUID,  currentGold: Int) -> Bool {
