@@ -20,7 +20,8 @@ class QuestViewModel: ObservableObject {
             
             let baseXP = 100
             let earnedXP: Int = calculateDynamicXP(difficulty: difficulty, frequency: frequency, baseXP: baseXP)
-            let quest = Quest(title: title, categories: categories, difficultyMultiplier: difficulty, frequency: frequency, earnedXP: earnedXP)
+            let earnedGold: Int = Int(earnedXP/10)
+            let quest = Quest(title: title, categories: categories, difficultyMultiplier: difficulty, frequency: frequency, earnedXP: earnedXP, earnedGold: earnedGold)
             activeQuests.append(quest)
         }
 
