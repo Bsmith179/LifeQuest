@@ -31,7 +31,8 @@ class QuestViewModel: ObservableObject {
  
     func completeQuest(questID: UUID) ->Quest? {
         let quest = activeQuests.first(where: { $0.id == questID})
-        if let quest {
+        if var quest, !quest.isCompleted {
+            quest.isCompleted = true
             activeQuests.removeAll(where: { $0.id == questID})
             return quest
         }

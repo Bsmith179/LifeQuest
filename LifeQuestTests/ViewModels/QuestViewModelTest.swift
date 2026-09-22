@@ -106,4 +106,21 @@ struct QuestViewModelTest {
         #expect(sut.activeQuests.isEmpty)
         #expect(completedQuests.id == originalQuest.id)
     }
+    
+    @Test("Completed quest enforces idempotency")
+    
+    func testCompleQuest_EnforcesIdempotency(){
+        let sut = QuestViewModel()
+        
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 1.0, frequency: .oneOff)
+        
+        let originalQuest = sut.activeQuests.first!
+        
+        _ = sut.completeQuest(questID: originalQuest.id)!
+        
+        let secondAttemptedQuest = sut.completeQuest(questID: originalQuest.id)
+        
+        #expect(secondAttemptedQuest == nil)
+    }
+    
 }
