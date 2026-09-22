@@ -10,9 +10,13 @@ import Foundation
 import Combine
  
 class ShopViewModel: ObservableObject {
+    
     @Published var availableRewards: [Reward] = []
     
-    func createReward(name: String,  goldCost: Int) {}
+    func createReward(name: String,  goldCost: Int) {
+        
+    }
+    
     func purchaseReward(rewardID: UUID,  currentGold: Int) -> Bool {
         return false
     }
