@@ -91,4 +91,19 @@ struct QuestViewModelTest {
         #expect(quest.earnedStat == expectedXPPerCategory)
     }
     
+    @Test("Completed quest is removed from Active List")
+    
+    func testCompleQuest_ReturnsQuestAndRemovesFromActiveList(){
+        
+        let sut = QuestViewModel()
+        
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 1.0, frequency: .oneOff)
+        
+        let originalQuest = sut.activeQuests.first!
+        
+        let completedQuests = sut.completeQuest(questID: originalQuest.id)!
+        
+        #expect(sut.activeQuests.isEmpty)
+        #expect(completedQuests.id == originalQuest.id)
+    }
 }
