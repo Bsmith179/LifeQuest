@@ -14,7 +14,7 @@ class QuestViewModel: ObservableObject {
     
     func createNewQuest(title: String,  categories: [StatCategory],  difficulty: Double,  frequency: QuestFrequency) {
         if !activeQuests.contains(where: { $0.title == title}){
-            
+            let difficulty = min(max(difficulty, 1.0),5.0)
             let quest = Quest(title: title, categories: categories, difficultyMultiplier: difficulty, frequency: frequency)
             activeQuests.append(quest)
         }
