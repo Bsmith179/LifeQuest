@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		280AEB863059A63300E0EDDF /* Screenshot 2026-09-15 at 12.12.50 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 280AEB853059A63300E0EDDF /* Screenshot 2026-09-15 at 12.12.50 PM.png */; };
+		28BF9C9230632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28BF9C9130632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png */; };
 		28DECD5D3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DECD5C3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		2895296530503FBC00C3ACFE /* LifeQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2895297B30503FBC00C3ACFE /* LifeQuestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeQuestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		289529AF305042CB00C3ACFE /* LifeQuestNoUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LifeQuestNoUI.xctestplan; sourceTree = "<group>"; };
+		28BF9C9130632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-09-22 at 5.43.49 PM.png"; sourceTree = "<group>"; };
 		28DECD5C3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-09-08 at 10.44.55 AM.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,6 +84,7 @@
 				2895296630503FBC00C3ACFE /* Products */,
 				28DECD5C3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png */,
 				280AEB853059A63300E0EDDF /* Screenshot 2026-09-15 at 12.12.50 PM.png */,
+				28BF9C9130632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -187,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				280AEB863059A63300E0EDDF /* Screenshot 2026-09-15 at 12.12.50 PM.png in Resources */,
+				28BF9C9230632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png in Resources */,
 				28DECD5D3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
