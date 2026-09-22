@@ -61,7 +61,7 @@ struct ShopViewModelTest {
     
     func testPurchaseReward_PreventSequencBreaking(playerGold: Int, canAfford: Bool){
         let sut = ShopViewModel()
-        sut.createReward(name: "Test Reward", goldCost: 10)
+        sut.createReward(name: "Test Reward", goldCost: 50)
         let rewardID = sut.availableRewards.first!.id
         
         let ableToPurchase = sut.purchaseReward(rewardID: rewardID, currentGold: playerGold)
