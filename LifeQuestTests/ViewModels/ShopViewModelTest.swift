@@ -69,4 +69,19 @@ struct ShopViewModelTest {
         #expect(ableToPurchase == canAfford)
     
     }
+    
+    @Test("Purchasing reward removes it from the list")
+    
+    func testPurchaseReward_REmovesFromAvailableList(){
+        
+        let sut = ShopViewModel()
+        sut.createReward(name: "Test Reward", goldCost: 50)
+        
+        let rewardID = sut.availableRewards.first!.id
+        
+        _ = sut.purchaseReward(rewardID: rewardID, currentGold: 50)
+        
+        #expect(sut.availableRewards.count == 0)
+    
+    }
 }
