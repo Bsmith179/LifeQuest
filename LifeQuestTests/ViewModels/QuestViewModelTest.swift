@@ -62,4 +62,18 @@ struct QuestViewModelTest {
         let quest = sut.activeQuests.first!
         #expect(quest.earnedXP == expectedXP)
     }
+    
+    @Test("Created quest calculates Dynamic Gold", arguments: [
+        (1.0, QuestFrequency.oneOff, 10),
+        (2.0, QuestFrequency.daily, 30),
+        (5.0, QuestFrequency.weekly, 100),
+    ])
+    func testCreateNewQuest_CalculatesDynamicGold(difficulty: Double, frequency: QuestFrequency, expectedGold: Int){
+        let sut = QuestViewModel()
+        
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: difficulty, frequency: frequency)
+        
+        let quest = sut.activeQuests.first!
+        #expect(quest.earnedGold == expectedGold)
+    }
 }
