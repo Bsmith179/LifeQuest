@@ -76,4 +76,19 @@ struct QuestViewModelTest {
         let quest = sut.activeQuests.first!
         #expect(quest.earnedGold == expectedGold)
     }
+    
+    @Test("Created quest splits 1% of XP between stats evenly with a minimum of 1", arguments: [
+        ([StatCategory.strength], 1),
+        ([StatCategory.strength, StatCategory.focus], 1),
+        ([StatCategory.strength, StatCategory.focus, StatCategory.charisma, StatCategory.intelligence], 1)
+    ])
+    func testCreateNewQuest_SplitsStatPoolEvently(categories: [StatCategory], expectedXPPerCategory: Int){
+        let sut = QuestViewModel()
+        
+        sut.createNewQuest(title: "Test Quest", categories: categories, difficulty: 1.0, frequency: .oneOff)
+        
+        let quest = sut.activeQuests.first!
+        #expect(quest.earnedStat == expectedXPPerCategory)
+    }
+    
 }
