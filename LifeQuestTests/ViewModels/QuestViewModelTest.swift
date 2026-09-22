@@ -48,4 +48,18 @@ struct QuestViewModelTest {
         let quest = sut.activeQuests.first!
         #expect(quest.difficultyMultiplier == expected)
     }
+    
+    @Test("Created quest calculates Dynamic XP rewards", arguments: [
+        (1.0, QuestFrequency.oneOff, 100),
+        (3.0, QuestFrequency.daily, 300),
+        (5.0, QuestFrequency.weekly, 1000),
+    ])
+    func testCreateNewQuest_CalculatesDynamicRewards(difficulty: Double, frequency: QuestFrequency, expectedXP: Int){
+        let sut = QuestViewModel()
+        
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: difficulty, frequency: frequency)
+        
+        let quest = sut.activeQuests.first!
+        #expect(quest.earnedXP == expectedXP)
+    }
 }
