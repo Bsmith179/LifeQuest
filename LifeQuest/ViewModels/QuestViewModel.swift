@@ -33,7 +33,7 @@ class QuestViewModel: ObservableObject {
         let statPool = earnedXP / 100
         let earnedStat: Int = categories.isEmpty ? 0 : max((statPool/categories.count), 1)
         let initialStatus = calculateQuestStatus(startDate: startDate)
-                let initialStreak = determineStreakState(frequency: frequency, start: dates.start, end: dates.end, currentStreak: nil)
+        let initialStreak = determineStreakState(frequency: frequency, start: dates.start, end: dates.end, currentStreak: nil)
         let quest = Quest(
             title: title,
             categories: categories,
@@ -147,40 +147,55 @@ class QuestViewModel: ObservableObject {
     }
     
     func determineStreakState(frequency: QuestFrequency, start: Date?, end: Date?, currentStreak: Int?) -> Int?{
-            
-            if frequency != .oneOff && (start != nil || end != nil) {
-                 return currentStreak ?? 0
-            }
-            else {
-                return nil
-            }
+        
+        if frequency != .oneOff && (start != nil || end != nil) {
+            return currentStreak ?? 0
         }
+        else {
+            return nil
+        }
+    }
     
     func calculateQuestStatus(startDate: Date?) -> QuestStatus {
-            if let startDate = startDate, self.clock.now < startDate {
-                return .upcoming
-            }
-            return .active
-            
+        if let startDate = startDate, self.clock.now < startDate {
+            return .upcoming
         }
-    
-    func evaluateTimePassage() -> Int {return 0}
-    
-    private func clampDifficulty(_ difficulty: Double) -> Double {
-        return min(max(difficulty, 1.0),5.0)
-    }
-    
-    private func calculateDynamicXP(difficulty: Double, frequency: QuestFrequency, baseXP: Int) -> Int{
+        return .active
         
-        let frequencyMultiplier: Double = switch frequency {
-        case .daily:
-            1.5
-        case .weekly:
-            2.0
-        case .oneOff:
-            1.0
-        }
-        return Int(Double(baseXP) * difficulty * frequencyMultiplier)
     }
     
-}
+    func evaluateTimePassage() -> Int {
+        for index in activeQuests.indices {
+            let quest = activeQuests[index]
+            //            if let end = quest.endDate,
+            //               end < self.clock.now {
+            //                activeQuests[index].status = .expired
+            //                continue
+            //            }
+            
+            if let start = quest.startDate,
+               start <= self.clock.now, quest.status == .upcoming {
+                activeQuests[index].status = .active
+            }
+        }
+        return 0
+    }
+        
+        private func clampDifficulty(_ difficulty: Double) -> Double {
+            return min(max(difficulty, 1.0),5.0)
+        }
+        
+        private func calculateDynamicXP(difficulty: Double, frequency: QuestFrequency, baseXP: Int) -> Int{
+            
+            let frequencyMultiplier: Double = switch frequency {
+            case .daily:
+                1.5
+            case .weekly:
+                2.0
+            case .oneOff:
+                1.0
+            }
+            return Int(Double(baseXP) * difficulty * frequencyMultiplier)
+        }
+        
+    }
