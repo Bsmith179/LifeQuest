@@ -165,37 +165,79 @@ class QuestViewModel: ObservableObject {
     }
     
     func evaluateTimePassage() -> Int {
+        var totalXPDrain = 0
+        
         for index in activeQuests.indices {
             let quest = activeQuests[index]
-            //            if let end = quest.endDate,
-            //               end < self.clock.now {
-            //                activeQuests[index].status = .expired
-            //                continue
-            //            }
+            if let end = quest.endDate,
+               end < self.clock.now {
+                activeQuests[index].status = .expired
+                continue
+            }
             
             if let start = quest.startDate,
                start <= self.clock.now, quest.status == .upcoming {
                 activeQuests[index].status = .active
             }
-        }
-        return 0
-    }
-        
-        private func clampDifficulty(_ difficulty: Double) -> Double {
-            return min(max(difficulty, 1.0),5.0)
-        }
-        
-        private func calculateDynamicXP(difficulty: Double, frequency: QuestFrequency, baseXP: Int) -> Int{
-            
-            let frequencyMultiplier: Double = switch frequency {
-            case .daily:
-                1.5
-            case .weekly:
-                2.0
-            case .oneOff:
-                1.0
+            if quest.status == .active || quest.status == .abandoned, quest.frequency != .oneOff,
+               let start = quest.startDate,
+               let currentStreak = quest.streak {
+                
+                let duration: TimeInterval = switch quest.frequency {
+                case .daily: 86_400
+                case .weekly: 604_800
+                case.oneOff: 0
+                }
+                let timeSinceStart = self.clock.now.timeIntervalSince(start)
+                
+                if timeSinceStart >= duration {
+                    let missedCycles = Int(timeSinceStart / duration)
+                    
+                    var newStreak = currentStreak
+                    
+                    for _ in 0..<missedCycles {
+                        if newStreak > 0 {
+                            newStreak = 0
+                        } else {
+                            newStreak -= 1
+                        }
+                        
+                        
+                        if newStreak < 0 {
+                            let penaltyMultiplier = min(Double(abs(newStreak)) * 0.20, 2.0)
+                            let cyclePenalty = Int(Double(quest.earnedXP) * penaltyMultiplier)
+                            totalXPDrain += cyclePenalty
+                        }
+                    }
+                    activeQuests[index].streak = newStreak
+                    
+                    let timeShift = duration * Double(missedCycles)
+                    activeQuests[index].startDate = start.addingTimeInterval(timeShift)
+                    
+                    if newStreak <= -10 {
+                        activeQuests[index].status = .abandoned
+                    }
+                }
             }
-            return Int(Double(baseXP) * difficulty * frequencyMultiplier)
         }
-        
+        return totalXPDrain
     }
+    
+    private func clampDifficulty(_ difficulty: Double) -> Double {
+        return min(max(difficulty, 1.0),5.0)
+    }
+    
+    private func calculateDynamicXP(difficulty: Double, frequency: QuestFrequency, baseXP: Int) -> Int{
+        
+        let frequencyMultiplier: Double = switch frequency {
+        case .daily:
+            1.5
+        case .weekly:
+            2.0
+        case .oneOff:
+            1.0
+        }
+        return Int(Double(baseXP) * difficulty * frequencyMultiplier)
+    }
+    
+}
