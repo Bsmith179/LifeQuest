@@ -143,6 +143,13 @@ class QuestViewModel: ObservableObject {
         
         var completedQuest = activeQuests.remove(at: index)
         completedQuest.status = .completed
+        let positiveStreak = max(completedQuest.streak ?? 0, 0)
+        let bonusMultiplier = 1.0 + min(Double(positiveStreak) * 0.10, 1.0)
+        
+        completedQuest.earnedXP = Int(Double(completedQuest.earnedXP) * bonusMultiplier)
+        completedQuest.earnedGold = completedQuest.earnedXP/10
+        let statPool = completedQuest.earnedXP / 100
+        completedQuest.earnedStat = completedQuest.categories.isEmpty ? 0 : max((statPool/completedQuest.categories.count), 1)
         return completedQuest
     }
     
