@@ -13,6 +13,11 @@ class QuestViewModel: ObservableObject {
     
     @Published var activeQuests: [Quest] = []
     
+    let clock: TimeProvider
+    
+    init(clock: TimeProvider = SystemClock()){
+        self.clock = clock
+    }
     
     func createNewQuest(title: String,  categories: [StatCategory],  difficulty: Double,  frequency: QuestFrequency) {
         if !activeQuests.contains(where: { $0.title == title}){
@@ -31,8 +36,8 @@ class QuestViewModel: ObservableObject {
  
     func completeQuest(questID: UUID) ->Quest? {
         let quest = activeQuests.first(where: { $0.id == questID})
-        if var quest, !quest.isCompleted {
-            quest.isCompleted = true
+        if var quest, quest.status == .active {
+            quest.status = .completed
             activeQuests.removeAll(where: { $0.id == questID})
             return quest
         }

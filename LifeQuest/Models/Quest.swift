@@ -7,14 +7,21 @@
 
 
 import Foundation
- 
+
+enum QuestStatus: String, Equatable, Sendable {
+    case active, completed, expired, abandoned, upcoming
+}
+
 struct Quest: Identifiable {
     let id = UUID()
     var title: String
     var categories: [StatCategory]
     var difficultyMultiplier: Double
     var frequency: QuestFrequency
-    var isCompleted: Bool = false
+    var status: QuestStatus = .active
+    var startDate: Date? = nil
+    var endDate: Date? = nil
+    var streak: Int? = nil
     
     var earnedXP : Int = 0
     var earnedGold : Int = 0

@@ -18,7 +18,7 @@ struct QuestViewModelTest {
         sut.createNewQuest(title: "Test Quest", categories: [StatCategory.strength], difficulty: 2.0, frequency: QuestFrequency.daily)
         
         let quest = sut.activeQuests.first!
-        #expect(!quest.isCompleted)
+        #expect(quest.status == .active)
         #expect(sut.activeQuests.count == 1)
     }
 
