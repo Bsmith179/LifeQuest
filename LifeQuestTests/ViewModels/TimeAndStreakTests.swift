@@ -86,6 +86,19 @@ struct TimeAndStreakTests {
         
     }
     
+    @Test("Create Quest assigns initial Status based on start Date", arguments: [
+            (Date.testDate(dayOffset: 1), QuestStatus.upcoming),
+            (Date.testDate(dayOffset: 0, hourOffset: 0), QuestStatus.active),
+            (nil, QuestStatus.active)
+        ])
+        func testCreateQuest_AssignsInitialStatusBasedOnStartDate(startDate: Date?, expectedStatus: QuestStatus) throws {
+            sut.createNewQuest(title: "Test Quests", categories: [.strength], difficulty: 2.0, frequency: .oneOff, startDate: startDate, endDate: nil )
+            
+            let quest = try #require(sut.activeQuests.first, "Quest should have been created but was not")
+            #expect(quest.status == expectedStatus)
+            
+        }
+    
     //MARK: - Section B, Streak Tests
     
     @Test("Streak activates with a date provided", arguments: [
@@ -126,5 +139,9 @@ struct TimeAndStreakTests {
         #expect(newQuest?.startDate == expectedNewStartDate)
         
     }
+    
+    //MARK: - Section D, Sweep Engine
+    
+    
     
 }
