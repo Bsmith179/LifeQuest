@@ -233,6 +233,8 @@ class QuestViewModel: ObservableObject {
         return archivedQuest
     }
     
+    func recommitQuest(questID: UUID, startDate: Date? = nil, endDate: Date? = nil)->Quest? {return nil}
+    
     private func clampDifficulty(_ difficulty: Double) -> Double {
         return min(max(difficulty, 1.0),5.0)
     }

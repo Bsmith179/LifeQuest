@@ -198,20 +198,38 @@ struct TimeAndStreakTests {
         
     }
     
-    //MARK: - Section E, Players choice
+    //MARK: - Section E, Player's choice
     
     @Test("Personally Abandoning a quest removes quest from active list and labels it abandoned")
-        func testAbandonQuest_RemovesFromActiveAndReturnsAbandoned() {
-            sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily, startDate: Date.testDate(dayOffset: 0),endDate: Date.testDate(dayOffset: 1))
-            let index = sut.activeQuests.startIndex
-            let quest = sut.activeQuests[index]
-            
-            fakeClock.now = Date.testDate(dayOffset: 2)
-            
-            let abandonedQuest = sut.abandonQuest(questID: quest.id)
-            
-            #expect(abandonedQuest?.status == .abandoned)
-            #expect(sut.activeQuests.isEmpty)
-        }
+    func testAbandonQuest_RemovesFromActiveAndReturnsAbandoned() {
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily, startDate: Date.testDate(dayOffset: 0),endDate: Date.testDate(dayOffset: 1))
+        let index = sut.activeQuests.startIndex
+        let quest = sut.activeQuests[index]
+        
+        fakeClock.now = Date.testDate(dayOffset: 2)
+        
+        let abandonedQuest = sut.abandonQuest(questID: quest.id)
+        
+        #expect(abandonedQuest?.status == .abandoned)
+        #expect(sut.activeQuests.isEmpty)
+    }
+    
+    @Test("Recommit an expired or abandoned quest archives old and spawns a new one")
+    func testRecommitQuest_ArchivesOldQuestAndSpawnsNewCycle() {
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily, startDate: Date.testDate(dayOffset: 0),endDate: Date.testDate(dayOffset: 1))
+        let index = sut.activeQuests.startIndex
+        let quest = sut.activeQuests[index]
+        
+        fakeClock.now = Date.testDate(dayOffset: 2)
+        
+        let archivedQuest = sut.recommitQuest(questID: quest.id, startDate: Date.testDate(dayOffset: 3), endDate: nil)
+        let recommitedQuest = sut.activeQuests.first
+        
+        #expect(archivedQuest?.status == .abandoned)
+        #expect(sut.activeQuests.count == 1)
+        #expect(archivedQuest?.id != recommitedQuest?.id)
+        #expect(recommitedQuest?.status == .upcoming)
+        #expect(recommitedQuest?.streak == 0)
+    }
     
 }
