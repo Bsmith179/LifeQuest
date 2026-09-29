@@ -232,4 +232,31 @@ struct TimeAndStreakTests {
         #expect(recommitedQuest?.streak == 0)
     }
     
+    //MARK: - Section F, Carrot
+    
+    @Test("Add Streak Bonus for xp, gold, and stats capped at 2x", arguments: [
+            (0,150,15,1),
+            (5,225,22,2),
+            (10,300,30,3),
+            (15,300,30,3)
+        ])
+        func testCompleteQuest_AppliesStreakBonusesToPayout(
+            initialStreak: Int,
+            expectedXP: Int,
+            expectedGold: Int,
+            expectedStats: Int
+        ) {
+            sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 1.0, frequency: .daily, startDate: Date.testDate(dayOffset: 0),endDate: nil)
+            let index = sut.activeQuests.startIndex
+            sut.activeQuests[index].streak = initialStreak
+            
+            
+            let completedQuest = sut.completeQuest(questID: sut.activeQuests[index].id)!
+            
+            #expect(completedQuest.earnedXP == expectedXP)
+            #expect(completedQuest.earnedGold == expectedGold)
+            #expect(completedQuest.earnedStat == expectedStats)
+            
+            
+        }
 }
