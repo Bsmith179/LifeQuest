@@ -44,5 +44,45 @@ struct TimeAndStreakTests {
         
     }
     
+    @Test("Updating quest dates validates start and end boundaries", arguments: [
+        (QuestFrequency.daily,
+         Date.testDate(dayOffset: 0, hourOffset: -1),
+         Date.testDate(dayOffset: 5), false),
+        (QuestFrequency.daily,
+         Date.testDate(dayOffset: 0, hourOffset: 0),
+         Date.testDate(dayOffset: 5), true),
+        (QuestFrequency.daily,
+         Date.testDate(dayOffset: 1),
+         Date.testDate(dayOffset: 1, hourOffset: 23), false),
+        (QuestFrequency.daily,
+         Date.testDate(dayOffset: 1),
+         Date.testDate(dayOffset: 2, hourOffset: 0), true),
+        (QuestFrequency.daily, Date.testDate(dayOffset: 1),
+         Date.testDate(dayOffset: 2, hourOffset: 1), true),
+        (QuestFrequency.weekly,
+         Date.testDate(dayOffset: 1),
+         Date.testDate(dayOffset: 7, hourOffset: 23), false),
+        (QuestFrequency.weekly,
+         Date.testDate(dayOffset: 1),
+         Date.testDate(dayOffset: 8), true),
+        (QuestFrequency.weekly,
+         Date.testDate(dayOffset: 1),
+         Date.testDate(dayOffset: 8, hourOffset: 1), true),
+        (QuestFrequency.oneOff,
+         Date.testDate(dayOffset: 1),
+         Date.testDate(dayOffset: 1, hourOffset: 1), true),
+        (QuestFrequency.oneOff,
+         Date.testDate(dayOffset: 1),
+         Date.testDate(dayOffset: 0, hourOffset: 23), false)])
+    func testUpdateQuestDates_ValidatesStartAndEndBoundaries(frequency: QuestFrequency, attemptedStart: Date, attemptedEnd: Date, expectedSuccess: Bool) {
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: frequency)
+        let quest = sut.activeQuests.first!
+        
+        let result = sut.updateQuestDates(questID: quest.id, startDate: attemptedStart, endDate: attemptedEnd)
+        
+        #expect(result == expectedSuccess)
+        
+    }
+    
     
 }

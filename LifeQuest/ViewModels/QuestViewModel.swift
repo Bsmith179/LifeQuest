@@ -89,6 +89,10 @@ class QuestViewModel: ObservableObject {
         
     }
     
+    func updateQuestDates(questID: UUID, startDate: Date? = nil, endDate: Date? = nil) -> Bool{
+        return true
+    }
+    
     func completeQuest(questID: UUID) ->Quest? {
         let quest = activeQuests.first(where: { $0.id == questID})
         if var quest, quest.status == .active {
@@ -115,4 +119,5 @@ class QuestViewModel: ObservableObject {
         }
         return Int(Double(baseXP) * difficulty * frequencyMultiplier)
     }
+    
 }
