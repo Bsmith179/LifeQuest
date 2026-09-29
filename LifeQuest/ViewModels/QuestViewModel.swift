@@ -107,14 +107,14 @@ class QuestViewModel: ObservableObject {
     }
     
     func determineStreakState(frequency: QuestFrequency, start: Date?, end: Date?, currentStreak: Int?) -> Int?{
-            
-            if frequency != .oneOff && (start != nil || end != nil) {
-                 return currentStreak ?? 0
-            }
-            else {
-                return nil
-            }
+        
+        if frequency != .oneOff && (start != nil || end != nil) {
+            return currentStreak ?? 0
         }
+        else {
+            return nil
+        }
+    }
     
     func completeQuest(questID: UUID) ->Quest? {
         let quest = activeQuests.first(where: { $0.id == questID})

@@ -30,7 +30,7 @@ struct TimeAndStreakTests {
         #expect(testDate.timeIntervalSince(fakeClock.now) == expectSecondsFromNow)
     }
     
-//MARK: - Section A, Date Validation
+    //MARK: - Section A, Date Validation
     
     @Test("Creating a quest with an end date auto creates start date", arguments:
             [
@@ -86,21 +86,45 @@ struct TimeAndStreakTests {
         
     }
     
-//MARK: - Section B, Streak Tests
+    //MARK: - Section B, Streak Tests
     
     @Test("Streak activates with a date provided", arguments: [
-            (QuestFrequency.daily, nil, nil, nil),
-            (QuestFrequency.daily, Date.testDate(dayOffset: 0), nil, 0),
-            (QuestFrequency.daily, nil, Date.testDate(dayOffset: 5), 0),
-            (QuestFrequency.oneOff, Date.testDate(dayOffset: 0), Date.testDate(dayOffset: 5), nil)
-        ])
-        func testStreak_ActivatesIfAnyDateProvided(frequency: QuestFrequency, startDate: Date?, endDate: Date?, expectedStreak: Int?) {
-            sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: frequency)
-            let quest = sut.activeQuests.first!
-            _ = sut.updateQuestDates(questID: quest.id, startDate: startDate, endDate: endDate)
-            let updatedQuest = sut.activeQuests.first(where: { $0.id == quest.id })!
-            #expect(updatedQuest.streak == expectedStreak)
-        }
+        (QuestFrequency.daily, nil, nil, nil),
+        (QuestFrequency.daily, Date.testDate(dayOffset: 0), nil, 0),
+        (QuestFrequency.daily, nil, Date.testDate(dayOffset: 5), 0),
+        (QuestFrequency.oneOff, Date.testDate(dayOffset: 0), Date.testDate(dayOffset: 5), nil)
+    ])
+    func testStreak_ActivatesIfAnyDateProvided(frequency: QuestFrequency, startDate: Date?, endDate: Date?, expectedStreak: Int?) {
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: frequency)
+        let quest = sut.activeQuests.first!
+        _ = sut.updateQuestDates(questID: quest.id, startDate: startDate, endDate: endDate)
+        let updatedQuest = sut.activeQuests.first(where: { $0.id == quest.id })!
+        #expect(updatedQuest.streak == expectedStreak)
+    }
     
+    //MARK: - Section C, Spawning
+    
+    @Test("Completing a reoccuring quest returns a completed and starts a new quest", arguments: [
+        (QuestFrequency.daily, Date.testDate(dayOffset: 0), QuestStatus.completed, 1, Date.testDate(dayOffset: 1)),
+        (QuestFrequency.weekly, Date.testDate(dayOffset: 0), QuestStatus.completed, 1, Date.testDate(dayOffset: 7)),
+        (QuestFrequency.oneOff, Date.testDate(dayOffset: 0), QuestStatus.completed, 0, nil)
+    ])
+    func testCompleteQuest_SpawnsNewCycleAndUpdatesStatuses(
+        frequency: QuestFrequency,
+        startDate: Date,
+        expectedFinalStatus: QuestStatus,
+        expectedActiveQuests: Int,
+        expectedNewStartDate: Date?
+    ) {
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: frequency, startDate: startDate)
+        let initialQuest = sut.activeQuests.first!
+        let completedQuest = sut.completeQuest(questID: initialQuest.id)
+        let newQuest = sut.activeQuests.first!
+        
+        #expect(completedQuest?.status == expectedFinalStatus)
+        #expect(sut.activeQuests.count == expectedActiveQuests)
+        #expect(newQuest.startDate == expectedNewStartDate)
+        
+    }
     
 }
