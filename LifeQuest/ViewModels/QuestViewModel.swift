@@ -233,7 +233,37 @@ class QuestViewModel: ObservableObject {
         return archivedQuest
     }
     
-    func recommitQuest(questID: UUID, startDate: Date? = nil, endDate: Date? = nil)->Quest? {return nil}
+    func recommitQuest(questID: UUID, startDate: Date? = nil, endDate: Date? = nil)->Quest? {
+        guard let index = activeQuests.firstIndex(where: {$0.id == questID}) else {
+            return nil
+        }
+        
+        let oldQuest = activeQuests[index]
+        
+        if let validated = resolveAndValidateDates(frequency: oldQuest.frequency, proposedStart: startDate, proposedEnd: endDate){
+            
+            let newStatus = calculateQuestStatus(startDate: validated.start)
+            let initialStreak = determineStreakState(frequency: oldQuest.frequency, start: validated.start, end: validated.end, currentStreak: nil)
+            let recommittedQuest = Quest(
+                title: oldQuest.title,
+                categories: oldQuest.categories,
+                difficultyMultiplier: oldQuest.difficultyMultiplier,
+                frequency: oldQuest.frequency,
+                status: newStatus,
+                startDate: validated.start,
+                endDate: validated.end,
+                streak: initialStreak,
+                earnedXP: oldQuest.earnedXP,
+                earnedGold: oldQuest.earnedGold,
+                earnedStat: oldQuest.earnedStat,
+            )
+            activeQuests.append(recommittedQuest)
+        }
+        
+        var archivedQuest = activeQuests.remove(at: index)
+        archivedQuest.status = .abandoned
+        return archivedQuest
+    }
     
     private func clampDifficulty(_ difficulty: Double) -> Double {
         return min(max(difficulty, 1.0),5.0)
