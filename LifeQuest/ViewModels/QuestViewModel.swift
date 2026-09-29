@@ -32,8 +32,8 @@ class QuestViewModel: ObservableObject {
         let earnedGold: Int = Int(earnedXP/10)
         let statPool = earnedXP / 100
         let earnedStat: Int = categories.isEmpty ? 0 : max((statPool/categories.count), 1)
-        let initialStatus = QuestStatus.active
-        let initialStreak = 0
+        let initialStatus = calculateQuestStatus(startDate: startDate)
+                let initialStreak = determineStreakState(frequency: frequency, start: dates.start, end: dates.end, currentStreak: nil)
         let quest = Quest(
             title: title,
             categories: categories,
@@ -101,30 +101,68 @@ class QuestViewModel: ObservableObject {
         }
         activeQuests[index].startDate = validDates.start
         activeQuests[index].endDate = validDates.end
+        activeQuests[index].status = calculateQuestStatus(startDate: validDates.start)
         activeQuests[index].streak = determineStreakState(frequency: quest.frequency, start: validDates.start, end: validDates.end, currentStreak: quest.streak
         )
         return true
     }
     
-    func determineStreakState(frequency: QuestFrequency, start: Date?, end: Date?, currentStreak: Int?) -> Int?{
-        
-        if frequency != .oneOff && (start != nil || end != nil) {
-            return currentStreak ?? 0
-        }
-        else {
+    func completeQuest(questID: UUID) ->Quest? {
+        guard let index = activeQuests.firstIndex(where: {$0.id == questID}),
+              activeQuests[index].status == .active else {
             return nil
         }
+        
+        let oldQuest = activeQuests[index]
+        
+        if oldQuest.frequency != .oneOff, let oldStart = oldQuest.startDate {
+            let timeShift: TimeInterval = oldQuest.frequency == .daily ? 86_400 : 604_800
+            let shiftStart = oldStart.addingTimeInterval(timeShift)
+            let continuedEnd = oldQuest.endDate
+            
+            if let validated = resolveAndValidateDates(frequency: oldQuest.frequency, proposedStart: shiftStart, proposedEnd: continuedEnd){
+                
+                let newStatus = calculateQuestStatus(startDate: validated.start)
+                let inheritedStreak = (oldQuest.streak ?? 0) + 1
+                let spawnedQuest = Quest(
+                    title: oldQuest.title,
+                    categories: oldQuest.categories,
+                    difficultyMultiplier: oldQuest.difficultyMultiplier,
+                    frequency: oldQuest.frequency,
+                    status: newStatus,
+                    startDate: validated.start,
+                    endDate: validated.end,
+                    streak: inheritedStreak,
+                    earnedXP: oldQuest.earnedXP,
+                    earnedGold: oldQuest.earnedGold,
+                    earnedStat: oldQuest.earnedStat
+                )
+                activeQuests.append(spawnedQuest)
+            }
+        }
+        
+        var completedQuest = activeQuests.remove(at: index)
+        completedQuest.status = .completed
+        return completedQuest
     }
     
-    func completeQuest(questID: UUID) ->Quest? {
-        let quest = activeQuests.first(where: { $0.id == questID})
-        if var quest, quest.status == .active {
-            quest.status = .completed
-            activeQuests.removeAll(where: { $0.id == questID})
-            return quest
+    func determineStreakState(frequency: QuestFrequency, start: Date?, end: Date?, currentStreak: Int?) -> Int?{
+            
+            if frequency != .oneOff && (start != nil || end != nil) {
+                 return currentStreak ?? 0
+            }
+            else {
+                return nil
+            }
         }
-        return nil
-    }
+    
+    func calculateQuestStatus(startDate: Date?) -> QuestStatus {
+            if let startDate = startDate, self.clock.now < startDate {
+                return .upcoming
+            }
+            return .active
+            
+        }
     
     private func clampDifficulty(_ difficulty: Double) -> Double {
         return min(max(difficulty, 1.0),5.0)

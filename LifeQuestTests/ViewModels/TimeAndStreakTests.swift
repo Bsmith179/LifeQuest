@@ -119,11 +119,11 @@ struct TimeAndStreakTests {
         sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: frequency, startDate: startDate)
         let initialQuest = sut.activeQuests.first!
         let completedQuest = sut.completeQuest(questID: initialQuest.id)
-        let newQuest = sut.activeQuests.first!
+        let newQuest = sut.activeQuests.first
         
         #expect(completedQuest?.status == expectedFinalStatus)
         #expect(sut.activeQuests.count == expectedActiveQuests)
-        #expect(newQuest.startDate == expectedNewStartDate)
+        #expect(newQuest?.startDate == expectedNewStartDate)
         
     }
     
