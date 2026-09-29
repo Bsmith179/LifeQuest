@@ -223,7 +223,15 @@ class QuestViewModel: ObservableObject {
         return totalXPDrain
     }
     
-    func abandonQuest(questID: UUID) ->Quest?{return nil}
+    func abandonQuest(questID: UUID) ->Quest?{
+        guard let index = activeQuests.firstIndex(where: {$0.id == questID}) else {
+            return nil
+        }
+        
+        var archivedQuest = activeQuests.remove(at: index)
+        archivedQuest.status = .abandoned
+        return archivedQuest
+    }
     
     private func clampDifficulty(_ difficulty: Double) -> Double {
         return min(max(difficulty, 1.0),5.0)
