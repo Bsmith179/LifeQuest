@@ -29,4 +29,20 @@ struct TimeAndStreakTests {
         let testDate = Date.testDate(dayOffset: dayOffset, hourOffset: hourOffset)
         #expect(testDate.timeIntervalSince(fakeClock.now) == expectSecondsFromNow)
     }
+    
+    @Test("Creating a quest with an end date auto creates start date", arguments:
+            [
+                (nil,Date.testDate(dayOffset: 5),Date.testEpoch),
+                (Date.testDate(dayOffset: 2),Date.testDate(dayOffset: 5),Date.testDate(dayOffset: 2))
+            ])
+    func testCreateQuest_DefaultsStartDateIfOnlyEndDateProvided(startDate: Date?, endDate: Date, expectedStartDate: Date){
+        sut.createNewQuest(title: "Test Quests", categories: [.strength], difficulty: 2.0, frequency: .oneOff, startDate: startDate, endDate: endDate )
+        
+        let quest = sut.activeQuests.first!
+        #expect(quest.startDate == expectedStartDate)
+        
+        
+    }
+    
+    
 }
