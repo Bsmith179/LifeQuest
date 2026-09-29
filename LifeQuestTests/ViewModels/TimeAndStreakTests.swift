@@ -87,17 +87,17 @@ struct TimeAndStreakTests {
     }
     
     @Test("Create Quest assigns initial Status based on start Date", arguments: [
-            (Date.testDate(dayOffset: 1), QuestStatus.upcoming),
-            (Date.testDate(dayOffset: 0, hourOffset: 0), QuestStatus.active),
-            (nil, QuestStatus.active)
-        ])
-        func testCreateQuest_AssignsInitialStatusBasedOnStartDate(startDate: Date?, expectedStatus: QuestStatus) throws {
-            sut.createNewQuest(title: "Test Quests", categories: [.strength], difficulty: 2.0, frequency: .oneOff, startDate: startDate, endDate: nil )
-            
-            let quest = try #require(sut.activeQuests.first, "Quest should have been created but was not")
-            #expect(quest.status == expectedStatus)
-            
-        }
+        (Date.testDate(dayOffset: 1), QuestStatus.upcoming),
+        (Date.testDate(dayOffset: 0, hourOffset: 0), QuestStatus.active),
+        (nil, QuestStatus.active)
+    ])
+    func testCreateQuest_AssignsInitialStatusBasedOnStartDate(startDate: Date?, expectedStatus: QuestStatus) throws {
+        sut.createNewQuest(title: "Test Quests", categories: [.strength], difficulty: 2.0, frequency: .oneOff, startDate: startDate, endDate: nil )
+        
+        let quest = try #require(sut.activeQuests.first, "Quest should have been created but was not")
+        #expect(quest.status == expectedStatus)
+        
+    }
     
     //MARK: - Section B, Streak Tests
     
@@ -143,36 +143,59 @@ struct TimeAndStreakTests {
     //MARK: - Section D, Sweep Engine
     
     @Test("Check Upcoming transitions to active", arguments: [
-            (Date.testDate(dayOffset: 0, hourOffset: 23), QuestStatus.upcoming),
-            (Date.testDate(dayOffset: 1, hourOffset: 0), QuestStatus.active),
-            (Date.testDate(dayOffset: 1, hourOffset: 1), QuestStatus.active)
-        ])
-        func testEvaluateTimePassage_TransitionsUpcomingToActive(currentDate: Date, expectedStatus: QuestStatus) {
-            sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily)
-            let quest = sut.activeQuests.first!
-            _ = sut.updateQuestDates(questID: quest.id, startDate: Date.testDate(dayOffset: 1))
-            fakeClock.now = currentDate
-            _ = sut.evaluateTimePassage()
-            
-            let updateQuest = sut.activeQuests.first(where: { $0.id == quest.id })!
-            #expect(updateQuest.status == expectedStatus)
-            
-        }
+        (Date.testDate(dayOffset: 0, hourOffset: 23), QuestStatus.upcoming),
+        (Date.testDate(dayOffset: 1, hourOffset: 0), QuestStatus.active),
+        (Date.testDate(dayOffset: 1, hourOffset: 1), QuestStatus.active)
+    ])
+    func testEvaluateTimePassage_TransitionsUpcomingToActive(currentDate: Date, expectedStatus: QuestStatus) {
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily)
+        let quest = sut.activeQuests.first!
+        _ = sut.updateQuestDates(questID: quest.id, startDate: Date.testDate(dayOffset: 1))
+        fakeClock.now = currentDate
+        _ = sut.evaluateTimePassage()
+        
+        let updateQuest = sut.activeQuests.first(where: { $0.id == quest.id })!
+        #expect(updateQuest.status == expectedStatus)
+        
+    }
     
     @Test("Check active transitions to expired", arguments: [
-            (nil, nil, QuestStatus.active),
-            (Date.testDate(dayOffset: 0), nil, QuestStatus.abandoned),
-            (nil, Date.testDate(dayOffset: 5), QuestStatus.expired),
-            (Date.testDate(dayOffset: 0), Date.testDate(dayOffset: 5), QuestStatus.expired)
-        ])
-        func testEvaluateTimePassage_MarkQuestsExpired(startDate: Date?, endDate: Date?, expectedStatus: QuestStatus) {
-            sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily)
-            let quest = sut.activeQuests.first!
-            _ = sut.updateQuestDates(questID: quest.id, startDate: startDate, endDate: endDate)
-            fakeClock.now = Date.testDate(dayOffset: 30)
-            _ = sut.evaluateTimePassage()
-            let updateQuest = sut.activeQuests.first(where: { $0.id == quest.id })!
-            #expect(updateQuest.status == expectedStatus)
-            
-        }
+        (nil, nil, QuestStatus.active),
+        (Date.testDate(dayOffset: 0), nil, QuestStatus.abandoned),
+        (nil, Date.testDate(dayOffset: 5), QuestStatus.expired),
+        (Date.testDate(dayOffset: 0), Date.testDate(dayOffset: 5), QuestStatus.expired)
+    ])
+    func testEvaluateTimePassage_MarkQuestsExpired(startDate: Date?, endDate: Date?, expectedStatus: QuestStatus) {
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily)
+        let quest = sut.activeQuests.first!
+        _ = sut.updateQuestDates(questID: quest.id, startDate: startDate, endDate: endDate)
+        fakeClock.now = Date.testDate(dayOffset: 30)
+        _ = sut.evaluateTimePassage()
+        let updateQuest = sut.activeQuests.first(where: { $0.id == quest.id })!
+        #expect(updateQuest.status == expectedStatus)
+        
+    }
+    
+    @Test("Streak Penalties are applied for missing cycles to abandonment", arguments: [
+        (5,1,0, QuestStatus.active),
+        (5,3,-2, QuestStatus.active),
+        (0,2,-2, QuestStatus.active),
+        (-8,1,-9, QuestStatus.active),
+        (-8,2,-10, QuestStatus.abandoned)
+    ])
+    func testEvaluateTimePassage_ExpiresQuestWhenEndDatePassed(initialStreak: Int, missedDays: Int, expectedStreak: Int, expectedStatus: QuestStatus) {
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily, startDate: Date.testDate(dayOffset: 0))
+        let index = sut.activeQuests.startIndex
+        sut.activeQuests[index].streak = initialStreak
+        
+        fakeClock.now = Date.testDate(dayOffset: missedDays)
+        
+        _ = sut.evaluateTimePassage()
+        let quest = sut.activeQuests[index]
+        #expect(quest.streak == expectedStreak)
+        #expect(quest.status == expectedStatus)
+        #expect(quest.startDate == fakeClock.now)
+        
+        
+    }
 }
