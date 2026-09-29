@@ -232,31 +232,60 @@ struct TimeAndStreakTests {
         #expect(recommitedQuest?.streak == 0)
     }
     
-    //MARK: - Section F, Carrot
+    //MARK: - Section F, The Carrot
     
     @Test("Add Streak Bonus for xp, gold, and stats capped at 2x", arguments: [
-            (0,150,15,1),
-            (5,225,22,2),
-            (10,300,30,3),
-            (15,300,30,3)
-        ])
-        func testCompleteQuest_AppliesStreakBonusesToPayout(
-            initialStreak: Int,
-            expectedXP: Int,
-            expectedGold: Int,
-            expectedStats: Int
-        ) {
-            sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 1.0, frequency: .daily, startDate: Date.testDate(dayOffset: 0),endDate: nil)
-            let index = sut.activeQuests.startIndex
-            sut.activeQuests[index].streak = initialStreak
-            
-            
-            let completedQuest = sut.completeQuest(questID: sut.activeQuests[index].id)!
-            
-            #expect(completedQuest.earnedXP == expectedXP)
-            #expect(completedQuest.earnedGold == expectedGold)
-            #expect(completedQuest.earnedStat == expectedStats)
-            
-            
+        (0,150,15,1),
+        (5,225,22,2),
+        (10,300,30,3),
+        (15,300,30,3)
+    ])
+    func testCompleteQuest_AppliesStreakBonusesToPayout(
+        initialStreak: Int,
+        expectedXP: Int,
+        expectedGold: Int,
+        expectedStats: Int
+    ) {
+        sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 1.0, frequency: .daily, startDate: Date.testDate(dayOffset: 0),endDate: nil)
+        let index = sut.activeQuests.startIndex
+        sut.activeQuests[index].streak = initialStreak
+        
+        
+        let completedQuest = sut.completeQuest(questID: sut.activeQuests[index].id)!
+        
+        #expect(completedQuest.earnedXP == expectedXP)
+        #expect(completedQuest.earnedGold == expectedGold)
+        #expect(completedQuest.earnedStat == expectedStats)
+        
+        
+    }
+    
+    //MARK: - Ssection G, The Stick
+    
+    @Test("Evaluate time passage calculates cumulative XP drain", arguments: [
+        (0, 1, 30),
+        (-1, 2, 150),
+        (-10, 1, 300),
+        (-10, 3, 900)
+    ])
+    func testEvaluateTimePassage_CalculatesXPDrainForMissedCycles(
+        initialStreak: Int,
+        missedDays: Int,
+        expectedDrain: Int
+    ) {
+        
+        sut.createNewQuest(title: "Penalty Test", categories: [.strength], difficulty: 1.0, frequency: .daily, startDate: Date.testEpoch)
+        
+        sut.activeQuests[0].streak = initialStreak
+        
+        if initialStreak <= -10 {
+            sut.activeQuests[0].status = .abandoned
         }
+        
+        fakeClock.now = Date.testDate(dayOffset: missedDays)
+        let totalDrain = sut.evaluateTimePassage()
+        
+        #expect(totalDrain == expectedDrain)
+    }
+    
 }
