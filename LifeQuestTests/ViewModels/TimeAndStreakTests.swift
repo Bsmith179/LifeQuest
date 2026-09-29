@@ -142,6 +142,21 @@ struct TimeAndStreakTests {
     
     //MARK: - Section D, Sweep Engine
     
-    
+    @Test("Check Upcoming transitions to active", arguments: [
+            (Date.testDate(dayOffset: 0, hourOffset: 23), QuestStatus.upcoming),
+            (Date.testDate(dayOffset: 1, hourOffset: 0), QuestStatus.active),
+            (Date.testDate(dayOffset: 1, hourOffset: 1), QuestStatus.active)
+        ])
+        func testEvaluateTimePassage_TransitionsUpcomingToActive(currentDate: Date, expectedStatus: QuestStatus) {
+            sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily)
+            let quest = sut.activeQuests.first!
+            _ = sut.updateQuestDates(questID: quest.id, startDate: Date.testDate(dayOffset: 1))
+            fakeClock.now = currentDate
+            _ = sut.evaluateTimePassage()
+            
+            let updateQuest = sut.activeQuests.first(where: { $0.id == quest.id })!
+            #expect(updateQuest.status == expectedStatus)
+            
+        }
     
 }

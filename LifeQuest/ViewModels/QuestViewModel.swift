@@ -164,6 +164,8 @@ class QuestViewModel: ObservableObject {
             
         }
     
+    func evaluateTimePassage() -> Int {return 0}
+    
     private func clampDifficulty(_ difficulty: Double) -> Double {
         return min(max(difficulty, 1.0),5.0)
     }
