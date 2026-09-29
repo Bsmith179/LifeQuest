@@ -68,7 +68,7 @@ class QuestViewModel: ObservableObject {
     }
     
     func validateQuestDates(frequency: QuestFrequency, start: Date?, end: Date?, now: Date) -> Bool{
-        if let start = start, start < now { return false}
+        if let start = start, start < now {return false}
         if let end = end, end < now {return false}
         
         if let start = start, let end = end {
@@ -90,6 +90,17 @@ class QuestViewModel: ObservableObject {
     }
     
     func updateQuestDates(questID: UUID, startDate: Date? = nil, endDate: Date? = nil) -> Bool{
+        guard let index = activeQuests.firstIndex(where: { $0.id == questID }) else { return false}
+        let quest = activeQuests[index]
+        var proposedStart = startDate ?? quest.startDate
+        let proposedEnd = endDate ?? quest.endDate
+        
+        
+        guard let validDates = resolveAndValidateDates(frequency: quest.frequency, proposedStart: proposedStart, proposedEnd: proposedEnd) else {
+            return false
+        }
+        activeQuests[index].startDate = validDates.start
+        activeQuests[index].endDate = validDates.end
         return true
     }
     
