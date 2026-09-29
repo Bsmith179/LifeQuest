@@ -101,8 +101,20 @@ class QuestViewModel: ObservableObject {
         }
         activeQuests[index].startDate = validDates.start
         activeQuests[index].endDate = validDates.end
+        activeQuests[index].streak = determineStreakState(frequency: quest.frequency, start: validDates.start, end: validDates.end, currentStreak: quest.streak
+        )
         return true
     }
+    
+    func determineStreakState(frequency: QuestFrequency, start: Date?, end: Date?, currentStreak: Int?) -> Int?{
+            
+            if frequency != .oneOff && (start != nil || end != nil) {
+                 return currentStreak ?? 0
+            }
+            else {
+                return nil
+            }
+        }
     
     func completeQuest(questID: UUID) ->Quest? {
         let quest = activeQuests.first(where: { $0.id == questID})
