@@ -223,6 +223,8 @@ class QuestViewModel: ObservableObject {
         return totalXPDrain
     }
     
+    func abandonQuest(questID: UUID) ->Quest?{return nil}
+    
     private func clampDifficulty(_ difficulty: Double) -> Double {
         return min(max(difficulty, 1.0),5.0)
     }

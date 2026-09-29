@@ -196,6 +196,22 @@ struct TimeAndStreakTests {
         #expect(quest.status == expectedStatus)
         #expect(quest.startDate == fakeClock.now)
         
-        
     }
+    
+    //MARK: - Section E, Players choice
+    
+    @Test("Personally Abandoning a quest removes quest from active list and labels it abandoned")
+        func testAbandonQuest_RemovesFromActiveAndReturnsAbandoned() {
+            sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily, startDate: Date.testDate(dayOffset: 0),endDate: Date.testDate(dayOffset: 1))
+            let index = sut.activeQuests.startIndex
+            let quest = sut.activeQuests[index]
+            
+            fakeClock.now = Date.testDate(dayOffset: 2)
+            
+            let abandonedQuest = sut.abandonQuest(questID: quest.id)
+            
+            #expect(abandonedQuest?.status == .abandoned)
+            #expect(sut.activeQuests.isEmpty)
+        }
+    
 }
