@@ -159,4 +159,20 @@ struct TimeAndStreakTests {
             
         }
     
+    @Test("Check active transitions to expired", arguments: [
+            (nil, nil, QuestStatus.active),
+            (Date.testDate(dayOffset: 0), nil, QuestStatus.abandoned),
+            (nil, Date.testDate(dayOffset: 5), QuestStatus.expired),
+            (Date.testDate(dayOffset: 0), Date.testDate(dayOffset: 5), QuestStatus.expired)
+        ])
+        func testEvaluateTimePassage_MarkQuestsExpired(startDate: Date?, endDate: Date?, expectedStatus: QuestStatus) {
+            sut.createNewQuest(title: "Test Quest", categories: [.strength], difficulty: 2.0, frequency: .daily)
+            let quest = sut.activeQuests.first!
+            _ = sut.updateQuestDates(questID: quest.id, startDate: startDate, endDate: endDate)
+            fakeClock.now = Date.testDate(dayOffset: 30)
+            _ = sut.evaluateTimePassage()
+            let updateQuest = sut.activeQuests.first(where: { $0.id == quest.id })!
+            #expect(updateQuest.status == expectedStatus)
+            
+        }
 }
