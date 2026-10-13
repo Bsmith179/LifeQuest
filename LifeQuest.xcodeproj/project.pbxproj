@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		280AEB863059A63300E0EDDF /* Screenshot 2026-09-15 at 12.12.50 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 280AEB853059A63300E0EDDF /* Screenshot 2026-09-15 at 12.12.50 PM.png */; };
+		28169234307E84D500CABF10 /* Screenshot 2026-10-13 at 11.24.38 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28169233307E84D500CABF10 /* Screenshot 2026-10-13 at 11.24.38 AM.png */; };
 		28BF9C9230632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28BF9C9130632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png */; };
 		28DECD5D3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DECD5C3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		280AEB853059A63300E0EDDF /* Screenshot 2026-09-15 at 12.12.50 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-09-15 at 12.12.50 PM.png"; sourceTree = "<group>"; };
+		28169233307E84D500CABF10 /* Screenshot 2026-10-13 at 11.24.38 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-10-13 at 11.24.38 AM.png"; sourceTree = "<group>"; };
 		284DD776306C1A3E00DC5E03 /* Screenshot 2026-09-29 at 12.08.53 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-09-29 at 12.08.53 PM.png"; sourceTree = "<group>"; };
 		2895296530503FBC00C3ACFE /* LifeQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2895297B30503FBC00C3ACFE /* LifeQuestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeQuestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,7 @@
 				280AEB853059A63300E0EDDF /* Screenshot 2026-09-15 at 12.12.50 PM.png */,
 				28BF9C9130632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png */,
 				284DD776306C1A3E00DC5E03 /* Screenshot 2026-09-29 at 12.08.53 PM.png */,
+				28169233307E84D500CABF10 /* Screenshot 2026-10-13 at 11.24.38 AM.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -193,6 +196,7 @@
 			files = (
 				280AEB863059A63300E0EDDF /* Screenshot 2026-09-15 at 12.12.50 PM.png in Resources */,
 				28BF9C9230632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png in Resources */,
+				28169234307E84D500CABF10 /* Screenshot 2026-10-13 at 11.24.38 AM.png in Resources */,
 				28DECD5D3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
