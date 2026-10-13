@@ -46,4 +46,26 @@ struct NetworkVolatilityTest {
         #expect(sut.activeQuests.first?.syncStatus == SyncStatus.pending)
         
     }
+    
+    @Test("Update sync status to sync after successfully syncing")
+    func testSync_Returns200_UpdatesStatusToSynced() async {
+        //Arrange
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(
+                url: request.url!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil)!
+            return (response, nil)
+            
+        }
+        sut.createNewQuest(title: "Test Quests", categories: [.strength], difficulty: 2.0, frequency: .oneOff)
+        
+        //Act
+        await sut.syncPendingQuests()
+        
+        //Assert
+        #expect(sut.activeQuests.first?.syncStatus == SyncStatus.synced)
+        
+    }
 }
