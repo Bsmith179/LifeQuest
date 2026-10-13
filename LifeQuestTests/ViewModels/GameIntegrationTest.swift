@@ -7,7 +7,7 @@
 
 import Testing
 @testable import LifeQuest
-
+@MainActor
 struct GameIntegrationTest {
     
     @Test("Integrate quest completion with Character's XP, Gold, and stats", arguments:

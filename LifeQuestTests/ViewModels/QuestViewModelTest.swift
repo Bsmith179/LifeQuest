@@ -7,7 +7,7 @@
 
 import Testing
 @testable import LifeQuest
-
+@MainActor
 struct QuestViewModelTest {
     
     @Test("Created quest gets added to active list")

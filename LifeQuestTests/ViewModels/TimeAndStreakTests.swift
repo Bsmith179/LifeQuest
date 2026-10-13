@@ -8,7 +8,7 @@
 import Foundation
 import Testing
 @testable import LifeQuest
-
+@MainActor
 struct TimeAndStreakTests {
     
     let fakeClock: FakeClock
