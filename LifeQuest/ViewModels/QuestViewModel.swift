@@ -17,49 +17,53 @@ class QuestViewModel: ObservableObject {
     let session: URLSession
     
     // Main Initializer
-       init(clock: TimeProvider,  session: URLSession) {
-           self.clock = clock
-           self.session = session
-       }
-       
-       // Production Initializer
-       convenience init() {
-           self.init(clock: SystemClock(), session: URLSession.shared)
-       }
-       
-       // Unit 5 Test Initializer
-       convenience init(clock: TimeProvider) {
-           self.init(clock: clock, session: .shared)
-       }
-       
-       func syncPendingQuests() async {
-           guard let url = URL(string: "https://api.lifequest.com/sync") else { return }
-           var request = URLRequest(url: url)
-           request.httpMethod = "POST"
-           
-           do {
-               let (_, response) = try await session.data(for: request)
-               
-               if let httpResponse = response as? HTTPURLResponse {
-                  switch httpResponse.statusCode {
-                  case 200...299:
-                      // TODO: Handle successful sync state
-                      break
-                  case 400...499:
-                      // TODO: Handle client errors
-                      break
-                  case 500...599:
-                      // TODO: Handle server errors
-                      break
-                  default:
-                      // TODO: Handle unknown status code
-                      break
-                   }
-               }
-           } catch {
-               // TODO: Handle network failures (timeout/no wifi) state
-           }
-       }
+    init(clock: TimeProvider,  session: URLSession) {
+        self.clock = clock
+        self.session = session
+    }
+    
+    // Production Initializer
+    convenience init() {
+        self.init(clock: SystemClock(), session: URLSession.shared)
+    }
+    
+    // Unit 5 Test Initializer
+    convenience init(clock: TimeProvider) {
+        self.init(clock: clock, session: .shared)
+    }
+    
+    func syncPendingQuests() async {
+        guard let url = URL(string: "https://api.lifequest.com/sync") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        do {
+            let (_, response) = try await session.data(for: request)
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                switch httpResponse.statusCode {
+                case 200...299:
+                    for index in activeQuests.indices {
+                        if activeQuests[index].syncStatus == .pending {
+                            activeQuests[index].syncStatus = .synced
+                        }
+                    }
+                    break
+                case 400...499:
+                    // TODO: Handle client errors
+                    break
+                case 500...599:
+                    // TODO: Handle server errors
+                    break
+                default:
+                    // TODO: Handle unknown status code
+                    break
+                }
+            }
+        } catch {
+            // TODO: Handle network failures (timeout/no wifi) state
+        }
+    }
     
     func createNewQuest(title: String,  categories: [StatCategory],  difficulty: Double,  frequency: QuestFrequency, startDate: Date? = nil, endDate: Date? = nil) {
         guard !activeQuests.contains(where: { $0.title == title }) else {return}
