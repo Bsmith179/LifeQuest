@@ -68,4 +68,20 @@ struct NetworkVolatilityTest {
         #expect(sut.activeQuests.first?.syncStatus == SyncStatus.synced)
         
     }
+    
+    @Test("Maintain sync status as pending with network timeout")
+    func testSync_NetworkTimeout_MaintainsPendingStatus() async {
+        //Arrange
+        MockURLProtocol.requestHandler = { request in
+                throw URLError(.timedOut)
+                }
+        sut.createNewQuest(title: "Test Quests", categories: [.strength], difficulty: 2.0, frequency: .oneOff)
+        
+        //Act
+        await sut.syncPendingQuests()
+        
+        //Assert
+        #expect(sut.activeQuests.first?.syncStatus == SyncStatus.pending)
+        
+    }
 }
