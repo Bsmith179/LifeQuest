@@ -8,30 +8,39 @@
 
 import Foundation
 import Combine
- 
+
 class ShopViewModel: ObservableObject {
     
     @Published var availableRewards: [Reward]
-        private let persistenceManager = LocalPersistenceManager()
-        private let saveURL: URL
-     
-        init(saveURL: URL? = nil){
-            if let customURL = saveURL {
-                self.saveURL = customURL
-            } else {
-                self.saveURL = LocalPersistenceManager.documentsURL(for: "rewards.json")
-            }
-     
-            availableRewards = []
+    private let persistenceManager = LocalPersistenceManager()
+    private let saveURL: URL
+    
+    init(saveURL: URL? = nil){
+        if let customURL = saveURL {
+            self.saveURL = customURL
+        } else {
+            self.saveURL = LocalPersistenceManager.documentsURL(for: "rewards.json")
         }
-     
+        
+        availableRewards = []
+        loadData()
+    }
+    
     func saveData(){
-            print("SaveData() called but not yet implemented")
+        do {
+            try persistenceManager.save(availableRewards, to: saveURL)
+        } catch {
+            print("Failed to save rewards: \(error.localizedDescription)")
         }
-     
-     func loadData(){
-            print("loadData() called but not yet implemented")
+    }
+    
+    func loadData(){
+        do {
+            availableRewards = try persistenceManager.load(from: saveURL)
+        } catch {
+            print("Failed to load rewards, starting with empty board: \(error.localizedDescription)")
         }
+    }
     
     func createReward(name: String,  goldCost: Int) {
         var goldCost = goldCost
