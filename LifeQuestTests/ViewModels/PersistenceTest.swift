@@ -78,5 +78,32 @@ struct PersistenceTests {
         #expect(questViewModelB.activeQuests.first?.title == "Test")
         
     }
+ 
+    @Test("CharacterViewModel saves state to disk and restores on init")
+        func testCharacterViewModel_SavesAndRestoresState() throws {
+            //Arrange
+            let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+            
+            defer {
+                try? FileManager.default.removeItem(at: tempURL)
+            }
+            
+            let characterViewModelA = CharacterViewModel(saveURL: tempURL)
+            
+            characterViewModelA.character.level = 5
+            characterViewModelA.character.gold = 1000
+            characterViewModelA.character.intelligence = 10
+            
+            characterViewModelA.saveData()
+            
+            //Act
+            let characterViewModelB = CharacterViewModel(saveURL: tempURL)
+            
+            //Assert
+            #expect(characterViewModelB.character.level == 5)
+            #expect(characterViewModelB.character.gold == 1000)
+            #expect(characterViewModelB.character.intelligence == 10)
+            
+        }
     
 }
