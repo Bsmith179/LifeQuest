@@ -106,4 +106,28 @@ struct PersistenceTests {
             
         }
     
+    @Test("ShopViewModel saves state to disk and restores on init")
+        func testShopViewModel_SavesAndRestoresState() throws {
+            //Arrange
+            let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+            
+            defer {
+                try? FileManager.default.removeItem(at: tempURL)
+            }
+            
+            let shopViewModelA = ShopViewModel(saveURL: tempURL)
+            
+            shopViewModelA.availableRewards.removeAll()
+            shopViewModelA.createReward(name: "test", goldCost: 500)
+            
+            shopViewModelA.saveData()
+            
+            //Act
+            let shopViewModelB = ShopViewModel(saveURL: tempURL)
+            
+            //Assert
+            #expect(shopViewModelB.availableRewards.count == 1)
+            #expect(shopViewModelB.availableRewards.first?.goldCost == 500)
+            
+        }
 }
