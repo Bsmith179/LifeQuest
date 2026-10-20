@@ -6,18 +6,24 @@
 //
 
 import Foundation
- 
+
 enum PersistenceError: Error {
     case notImplemented
 }
- 
+
 struct LocalPersistenceManager {
     func save<T: Codable>(_  data: T,  to url: URL) throws {
-        throw PersistenceError.notImplemented
+        let encoder = JSONEncoder()
+        let dataToSave = try encoder.encode(data)
+        
+        try dataToSave.write(to: url)
     }
     
     func load<T: Codable>( from url: URL) throws -> T {
-        throw PersistenceError.notImplemented
+        let decoder = JSONDecoder()
+        let dataToLoad = try Data(contentsOf: url)
+        
+        return try decoder.decode(T.self, from: dataToLoad)
     }
     
     static func documentsURL( for filename: String) -> URL {
