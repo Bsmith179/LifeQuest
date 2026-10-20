@@ -47,4 +47,36 @@ struct PersistenceTests {
         #expect(loadedPayload == payload)
     }
     
+    @Test("Test that Quest View Model saves and restores Quests")
+    func testQuestViewModel_SavesAndRestoresState() async throws {
+        //Arrange
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        
+        defer {
+            try? FileManager.default.removeItem(at: tempURL)
+        }
+        
+        let questViewModelA = QuestViewModel(
+            clock: fakeClock,
+            session: mockSession,
+            saveURL: tempURL
+        )
+        questViewModelA.activeQuests.removeAll()
+        
+        questViewModelA.createNewQuest(title: "Test", categories: [.strength], difficulty: 2.0, frequency: .daily)
+        questViewModelA.saveData()
+        
+        //Act
+        let questViewModelB = QuestViewModel(
+            clock: fakeClock,
+            session: mockSession,
+            saveURL: tempURL
+        )
+        
+        //Assert
+        #expect(questViewModelB.activeQuests.count == 1)
+        #expect(questViewModelB.activeQuests.first?.title == "Test")
+        
+    }
+    
 }
