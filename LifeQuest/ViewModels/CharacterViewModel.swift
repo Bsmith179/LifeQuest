@@ -10,11 +10,29 @@ import Foundation
 import Combine
  
 class CharacterViewModel: ObservableObject {
-    @Published var character = Character()
+    @Published var character: Character
+        let xpThreshold: Int = 1000
+        let goldThreshold: Int = 99999
     
-    let xpThreshold: Int = 1000
-    let goldThreshold: Int = 99999
-    
+        private let persistenceManager = LocalPersistenceManager()
+        private let saveURL: URL
+     
+        init(saveURL: URL? = nil){
+            if let customURL = saveURL {
+                self.saveURL = customURL
+            } else {
+                self.saveURL = LocalPersistenceManager.documentsURL(for: "character.json")
+            }
+            character = Character()
+        }
+     
+    func saveData(){
+            print("SaveData() called but not yet implemented")
+        }
+     
+     func loadData(){
+            print("loadData() called but not yet implemented")
+        }
     func gainXP(amount: Int) {
         var amount = amount
         amount = max(0,amount)

@@ -9,7 +9,7 @@ import Testing
 import Foundation
 @testable import LifeQuest
 @MainActor
-
+@Suite("Network Test", .serialized)
 struct NetworkVolatilityTest {
     
     let fakeClock: FakeClock

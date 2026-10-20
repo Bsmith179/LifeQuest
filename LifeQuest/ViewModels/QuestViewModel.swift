@@ -11,25 +11,61 @@ import Combine
 
 @MainActor
 class QuestViewModel: ObservableObject {
-    @Published var activeQuests: [Quest] = []
-    
+    @Published var activeQuests: [Quest]
+ 
     let clock: TimeProvider
+ 
     let session: URLSession
+ 
     
-    // Main Initializer
-    init(clock: TimeProvider,  session: URLSession) {
+ 
+    private let persistenceManager = LocalPersistenceManager()
+ 
+    private let saveURL: URL
+ 
+ 
+    init(clock: TimeProvider, session: URLSession, saveURL: URL? = nil){
+ 
         self.clock = clock
+ 
         self.session = session
+ 
+        activeQuests = []
+ 
+        if let customURL = saveURL {
+ 
+            self.saveURL = customURL
+ 
+        } else{
+ 
+            self.saveURL = LocalPersistenceManager.documentsURL(for: "quests.json")
+ 
+        }
+ 
     }
-    
-    // Production Initializer
-    convenience init() {
-        self.init(clock: SystemClock(), session: URLSession.shared)
+ 
+convenience init() {
+        self.init(clock: SystemClock(), session: URLSession.shared, saveURL: nil)
     }
+ 
     
-    // Unit 5 Test Initializer
-    convenience init(clock: TimeProvider) {
-        self.init(clock: clock, session: .shared)
+ 
+convenience init (clock: TimeProvider) {
+        self.init(clock: clock, session: URLSession.shared, saveURL: nil)
+    }
+ 
+    
+ 
+convenience init (saveURL: URL){
+        self.init(clock: SystemClock(), session: URLSession.shared, saveURL: saveURL)
+    }
+ 
+ func saveData(){
+        print("SaveData() called but not yet implemented")
+    }
+ 
+ func loadData(){
+        print("loadData() called but not yet implemented")
     }
     
     func syncPendingQuests() async {
@@ -86,12 +122,12 @@ class QuestViewModel: ObservableObject {
             difficultyMultiplier: difficulty,
             frequency: frequency,
             status: initialStatus,
-            startDate: dates.start,
-            endDate: dates.end,
-            streak: initialStreak,
             earnedXP: earnedXP,
             earnedGold: earnedGold,
             earnedStat: earnedStat,
+            startDate: dates.start,
+            endDate: dates.end,
+            streak: initialStreak,
             syncStatus: .pending
         )
         
@@ -177,12 +213,12 @@ class QuestViewModel: ObservableObject {
                     difficultyMultiplier: oldQuest.difficultyMultiplier,
                     frequency: oldQuest.frequency,
                     status: newStatus,
-                    startDate: validated.start,
-                    endDate: validated.end,
-                    streak: inheritedStreak,
                     earnedXP: oldQuest.earnedXP,
                     earnedGold: oldQuest.earnedGold,
                     earnedStat: oldQuest.earnedStat,
+                    startDate: validated.start,
+                    endDate: validated.end,
+                    streak: inheritedStreak,
                     syncStatus: .pending
                 )
                 activeQuests.append(spawnedQuest)
@@ -305,12 +341,12 @@ class QuestViewModel: ObservableObject {
                 difficultyMultiplier: oldQuest.difficultyMultiplier,
                 frequency: oldQuest.frequency,
                 status: newStatus,
-                startDate: validated.start,
-                endDate: validated.end,
-                streak: initialStreak,
                 earnedXP: oldQuest.earnedXP,
                 earnedGold: oldQuest.earnedGold,
                 earnedStat: oldQuest.earnedStat,
+                startDate: validated.start,
+                endDate: validated.end,
+                streak: initialStreak,
                 syncStatus: .pending
             )
             activeQuests.append(recommittedQuest)

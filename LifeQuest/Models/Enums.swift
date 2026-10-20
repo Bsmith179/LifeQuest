@@ -8,10 +8,16 @@
 
 import Foundation
  
-enum StatCategory {
-    case intelligence, strength, charisma, focus
+enum QuestStatus: String, Equatable, Sendable, Codable {
+    case active, completed, expired, abandoned, upcoming
 }
- 
-enum QuestFrequency {
+enum SyncStatus: String, Equatable, Sendable, Codable {
+    case synced
+    case pending
+}
+enum StatCategory: String, Codable {
+    case intelligence, strength, focus, charisma
+}
+enum QuestFrequency: String, Codable {
     case oneOff, daily, weekly
 }
