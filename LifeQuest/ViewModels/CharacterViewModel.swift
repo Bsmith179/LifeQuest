@@ -8,31 +8,40 @@
 
 import Foundation
 import Combine
- 
+
 class CharacterViewModel: ObservableObject {
     @Published var character: Character
-        let xpThreshold: Int = 1000
-        let goldThreshold: Int = 99999
+    let xpThreshold: Int = 1000
+    let goldThreshold: Int = 99999
     
-        private let persistenceManager = LocalPersistenceManager()
-        private let saveURL: URL
-     
-        init(saveURL: URL? = nil){
-            if let customURL = saveURL {
-                self.saveURL = customURL
-            } else {
-                self.saveURL = LocalPersistenceManager.documentsURL(for: "character.json")
-            }
-            character = Character()
+    private let persistenceManager = LocalPersistenceManager()
+    private let saveURL: URL
+    
+    init(saveURL: URL? = nil){
+        if let customURL = saveURL {
+            self.saveURL = customURL
+        } else {
+            self.saveURL = LocalPersistenceManager.documentsURL(for: "character.json")
         }
-     
+        character = Character()
+        loadData()
+    }
+    
     func saveData(){
-            print("SaveData() called but not yet implemented")
+        do {
+            try persistenceManager.save(character, to: saveURL)
+        } catch {
+            print("Failed to save character data \(error.localizedDescription)")
         }
-     
-     func loadData(){
-            print("loadData() called but not yet implemented")
+    }
+    
+    func loadData(){
+        do {
+            character = try persistenceManager.load(from: saveURL)
+        } catch {
+            print("No character data found, starting with default")
         }
+    }
     func gainXP(amount: Int) {
         var amount = amount
         amount = max(0,amount)
@@ -40,7 +49,7 @@ class CharacterViewModel: ObservableObject {
         checkLevelUp()
     }
     
-
+    
     func checkLevelUp() {
         while character.currentXP >= xpThreshold {
             character.currentXP -= xpThreshold
