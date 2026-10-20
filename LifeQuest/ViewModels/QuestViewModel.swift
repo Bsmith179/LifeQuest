@@ -12,60 +12,72 @@ import Combine
 @MainActor
 class QuestViewModel: ObservableObject {
     @Published var activeQuests: [Quest]
- 
-    let clock: TimeProvider
- 
-    let session: URLSession
- 
     
- 
+    let clock: TimeProvider
+    
+    let session: URLSession
+    
+    
+    
     private let persistenceManager = LocalPersistenceManager()
- 
+    
     private let saveURL: URL
- 
- 
+    
+    
     init(clock: TimeProvider, session: URLSession, saveURL: URL? = nil){
- 
+        
         self.clock = clock
- 
+        
         self.session = session
- 
+        
         activeQuests = []
- 
+        
         if let customURL = saveURL {
- 
+            
             self.saveURL = customURL
- 
+            
         } else{
- 
+            
             self.saveURL = LocalPersistenceManager.documentsURL(for: "quests.json")
- 
+            
         }
- 
+       
+        loadData()
+        
     }
- 
-convenience init() {
+    
+    convenience init() {
         self.init(clock: SystemClock(), session: URLSession.shared, saveURL: nil)
     }
- 
     
- 
-convenience init (clock: TimeProvider) {
+    
+    
+    convenience init (clock: TimeProvider) {
         self.init(clock: clock, session: URLSession.shared, saveURL: nil)
     }
- 
     
- 
-convenience init (saveURL: URL){
+    
+    
+    convenience init (saveURL: URL){
         self.init(clock: SystemClock(), session: URLSession.shared, saveURL: saveURL)
     }
- 
- func saveData(){
-        print("SaveData() called but not yet implemented")
+    
+    func saveData(){
+        do{
+            
+            try persistenceManager.save(activeQuests, to: self.saveURL)
+        } catch {
+            print("Error saving quests: \(error.localizedDescription)")
+        }
     }
- 
- func loadData(){
-        print("loadData() called but not yet implemented")
+    
+    func loadData(){
+        do{
+            
+            activeQuests = try persistenceManager.load(from: saveURL)
+        } catch{
+            print("No saved quests found. Starting with an empty board")
+        }
     }
     
     func syncPendingQuests() async {
