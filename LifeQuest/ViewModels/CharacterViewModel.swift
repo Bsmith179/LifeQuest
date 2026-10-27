@@ -56,7 +56,13 @@ class CharacterViewModel: ObservableObject {
         }
     }
     
-    func applyDrain(XPAmount: Int){}
+    func applyDrain(XPAmount: Int){
+        character.currentXP -= XPAmount
+        
+        if character.currentXP < 0 {
+            character.currentXP = 0
+        }
+    }
     
     
     func addStat(category: StatCategory,  amount: Int) {
