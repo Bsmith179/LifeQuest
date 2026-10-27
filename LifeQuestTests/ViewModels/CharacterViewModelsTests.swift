@@ -193,3 +193,18 @@ struct CharacterViewModelsTests {
 
     #expect(sut.character.gold == expectedResult)
 }
+
+    //MARK: - Apply Drain
+@Test("Apply drain reduces character XP and floors at 0", arguments: [
+        (1000,300,700),
+        (100,300,0),
+        (1000, 0, 1000)
+    ])
+    func testApplyDrain_ReducesXP(initialXP: Int, drainAmount: Int, expectedXP: Int){
+        let sut = CharacterViewModel()
+        sut.character.currentXP = initialXP
+        
+        sut.applyDrain(XPAmount: drainAmount)
+        
+        #expect(sut.character.currentXP == expectedXP)
+    }

@@ -49,13 +49,16 @@ class CharacterViewModel: ObservableObject {
         checkLevelUp()
     }
     
-    
     func checkLevelUp() {
         while character.currentXP >= xpThreshold {
             character.currentXP -= xpThreshold
             character.level += 1
         }
     }
+    
+    func applyDrain(XPAmount: Int){}
+    
+    
     func addStat(category: StatCategory,  amount: Int) {
         var amount = amount
         let maxCap: Int = 99
