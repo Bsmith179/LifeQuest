@@ -26,3 +26,9 @@ struct Reward: Identifiable, Codable, Equatable, Sendable {
     }
     
 }
+
+extension Reward {
+    static var mockReward: Reward {
+        Reward(title: "Test", goldCost: 50)
+    }
+}
