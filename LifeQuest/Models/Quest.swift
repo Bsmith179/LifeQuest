@@ -70,3 +70,75 @@ syncStatus: SyncStatus = .pending) {
         case syncStatus = "syncStatus"
     }
 }
+
+extension Quest {
+    static var dailyMock: Quest {
+        Quest(title: "Test",
+              categories: [.strength],
+              difficultyMultiplier: 1.5,
+              frequency: .daily,
+              status: .active,
+              earnedXP: 150,
+              earnedGold: 15,
+              earnedStat: 1,
+              startDate: Date(),
+              endDate: Calendar.current.date(byAdding: .day, value: 1, to: Date()),
+              streak: 5,
+              syncStatus: .pending)
+    }
+    
+    static var oneOffMock: Quest {
+        Quest(title: "Test",
+              categories: [.strength],
+              difficultyMultiplier: 1.5,
+              frequency: .oneOff,
+              status: .active,
+              earnedXP: 150,
+              earnedGold: 15,
+              earnedStat: 1,
+              startDate: Date(),
+              endDate: Calendar.current.date(byAdding: .day, value: 1, to: Date()),
+              streak: nil,
+              syncStatus: .pending)
+    }
+    
+    static var dailyUpcomingMock: Quest {
+        Quest(title: "Test",
+              categories: [.strength],
+              difficultyMultiplier: 1.5,
+              frequency: .daily,
+              status: .upcoming,
+              earnedXP: 150,
+              earnedGold: 15,
+              earnedStat: 1,
+              startDate: Calendar.current.date(byAdding: .day, value: 2, to: Date()),
+              endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date()),
+              syncStatus: .pending)
+    }
+    
+    static var dailyCompletedMock: Quest {
+        Quest(title: "Test",
+              categories: [.strength],
+              difficultyMultiplier: 1.5,
+              frequency: .daily,
+              status: .completed,
+              earnedXP: 150,
+              earnedGold: 15,
+              earnedStat: 1,
+              syncStatus: .pending)
+    }
+    
+    static var dailyAbandonedMock: Quest {
+        Quest(title: "Test",
+              categories: [.strength],
+              difficultyMultiplier: 1.5,
+              frequency: .daily,
+              status: .abandoned,
+              earnedXP: 150,
+              earnedGold: 15,
+              earnedStat: 1,
+              endDate: Calendar.current.date(byAdding: .day, value: 1, to: Date()),
+              streak: -10,
+              syncStatus: .pending)
+    }
+}
