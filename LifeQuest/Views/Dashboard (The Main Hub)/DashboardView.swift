@@ -37,8 +37,8 @@ struct DashboardView: View {
                    VStack(spacing: 16){
                        StatMeterView(title: "Strength", current: characterVM.character.strength, max: 99, color: .red)
                        StatMeterView(title: "Focus", current: characterVM.character.focus, max: 99, color: .yellow)
-                       StatMeterView(title: "Intelligence", current: characterVM.character.strength, max: 99, color: .blue)
-                       StatMeterView(title: "Charisma", current: characterVM.character.strength, max: 99, color: .purple)
+                       StatMeterView(title: "Intelligence", current: characterVM.character.intelligence, max: 99, color: .blue)
+                       StatMeterView(title: "Charisma", current: characterVM.character.charisma, max: 99, color: .purple)
                    }
                }
                .padding(.horizontal)
