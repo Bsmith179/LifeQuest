@@ -22,16 +22,6 @@ struct LifeQuestApp: App {
                 .environmentObject(characterVM)
                 .environmentObject(questVM)
                 .environmentObject(shopVM)
-            
-            QuestBoardView()
-                .environmentObject(characterVM)
-                .environmentObject(questVM)
-                .environmentObject(shopVM)
-            
-            ShopView()
-                .environmentObject(characterVM)
-                .environmentObject(questVM)
-                .environmentObject(shopVM)
         }
         .onChange(of: scenePhase) { oldPhase, newPhase in
             switch newPhase {
