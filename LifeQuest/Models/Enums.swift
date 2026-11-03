@@ -15,9 +15,9 @@ enum SyncStatus: String, Equatable, Sendable, Codable {
     case synced
     case pending
 }
-enum StatCategory: String, Codable {
+enum StatCategory: String, Codable, CaseIterable {
     case intelligence, strength, focus, charisma
 }
-enum QuestFrequency: String, Codable {
+enum QuestFrequency: String, Codable, CaseIterable {
     case oneOff, daily, weekly
 }

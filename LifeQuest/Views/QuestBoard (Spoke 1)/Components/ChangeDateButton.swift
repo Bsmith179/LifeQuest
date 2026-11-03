@@ -8,6 +8,7 @@
 import SwiftUI
  
 struct ChangeDateButton: View {
+    let questTitle: String
     let action: () -> Void
     var body: some View {
         Button(action: action) {
@@ -15,10 +16,11 @@ struct ChangeDateButton: View {
         }
         .buttonStyle(.bordered)
         .tint(.blue)
+        .accessibilityIdentifier("ChangeDateButton_\(questTitle)")
     }
 }
  
 #Preview("Change Date Button") {
-    ChangeDateButton(action: {})
+    ChangeDateButton(questTitle: "Test", action: {})
         .padding()
 }

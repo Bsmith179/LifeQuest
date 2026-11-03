@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
- 
+
 struct QuestBoardView: View {
     
-   @EnvironmentObject private var viewModel: QuestViewModel
-    
+    @EnvironmentObject private var viewModel: QuestViewModel
+    @State private var isShowingAddQuest: Bool = false
     var body: some View {
         NavigationView {
             List{
@@ -21,7 +21,7 @@ struct QuestBoardView: View {
                         .listRowSeparator(.hidden)
                 } else {
                     ForEach(viewModel.activeQuests) { quest in
-                       QuestRowView(quest: quest)
+                        QuestRowView(quest: quest)
                             .listRowSeparator(.hidden)
                             .padding(.vertical, 2)
                     }
@@ -32,16 +32,20 @@ struct QuestBoardView: View {
             .toolbar{
                 ToolbarItem(placement: .primaryAction){
                     Button(action: {
-                        
+                        isShowingAddQuest = true
                     }){
                         Image(systemName: "plus")
                     }
+                    .accessibilityIdentifier("AddQuestButton")
                 }
+            }
+            .sheet(isPresented: $isShowingAddQuest){
+                AddQuestSheet()
             }
         }
     }
 }
- 
+
 #Preview {
     let previewViewModel = QuestViewModel(clock: SystemClock(), session: URLSession.shared)
     previewViewModel.activeQuests = [.dailyMock, .dailyCompletedMock, .dailyUpcomingMock, .dailyAbandonedMock]

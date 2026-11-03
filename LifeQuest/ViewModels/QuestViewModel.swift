@@ -148,13 +148,14 @@ class QuestViewModel: ObservableObject {
     }
     
     private func resolveAndValidateDates(frequency: QuestFrequency, proposedStart: Date?, proposedEnd: Date?) -> (start: Date?, end: Date?)? {
-        
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour], from: self.clock.now)
+        let flooredNow = Calendar.current.date(from: components) ?? self.clock.now
         var start = proposedStart
         if start == nil && proposedEnd != nil {
-            start = self.clock.now
+            start = flooredNow
         }
         
-        guard validateQuestDates(frequency: frequency, start: start, end: proposedEnd, now: self.clock.now) else {
+        guard validateQuestDates(frequency: frequency, start: start, end: proposedEnd, now: flooredNow) else {
             return nil
         }
         
