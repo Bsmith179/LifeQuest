@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
- 
+
 struct ShopView: View {
     @EnvironmentObject private var shopViewModel: ShopViewModel
     @EnvironmentObject private var characterViewModel: CharacterViewModel
+    
+    @State private var isShowingAddReward = false
     
     var body: some View {
         NavigationView {
@@ -19,7 +21,7 @@ struct ShopView: View {
                         .foregroundColor(.yellow)
                         .font(.title)
                     Text("Available Gold: \(characterViewModel.character.gold)")
-                        .font(.title3)
+                        .font(.title2)
                         .bold()
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,17 +48,23 @@ struct ShopView: View {
                 .listStyle(.plain)
             }
             .navigationTitle("Reward Shop")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: { }) {
+            .toolbar{
+                ToolbarItem(placement: .primaryAction){
+                    Button(action: {
+                        isShowingAddReward = true
+                    }){
                         Image(systemName: "plus")
                     }
+                    .accessibilityIdentifier("AddRewardButton")
                 }
+            }
+            .sheet(isPresented: $isShowingAddReward){
+                AddRewardSheet()
             }
         }
     }
 }
- 
+
 #Preview("Shop View") {
     let previewShopVM = ShopViewModel()
     let previewCharVM = CharacterViewModel()
