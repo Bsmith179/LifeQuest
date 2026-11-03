@@ -46,7 +46,7 @@ struct DashboardView: View {
                 Spacer()
                 
                 HStack(spacing: 20){
-                    NavigationLink(destination: Text("QuestBoard Placeholder")) {
+                    NavigationLink(destination: QuestBoardView()) {
                         Text("Quest Board")
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -55,7 +55,7 @@ struct DashboardView: View {
                     .buttonStyle(.borderedProminent)
                     .accessibilityIdentifier("QuestBoardViewButton")
                     
-                    NavigationLink(destination: Text("Shop Placeholder")) {
+                    NavigationLink(destination: ShopView()) {
                         Text("Reward Shop")
                             .frame(maxWidth: .infinity)
                             .padding()
