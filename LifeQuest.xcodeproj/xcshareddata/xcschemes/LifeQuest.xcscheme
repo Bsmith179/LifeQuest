@@ -56,6 +56,16 @@
                ReferencedContainer = "container:LifeQuest.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "288D791630ACA63500E020EA"
+               BuildableName = "LifeQuestUITest.xctest"
+               ReferencedContainer = "container:LifeQuest.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
