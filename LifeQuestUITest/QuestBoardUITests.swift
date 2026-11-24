@@ -40,39 +40,59 @@ final class QuestBoardUITests: XCTestCase {
         addSheet.tapSave()
         
         //4. attempting to create a duplicate quest triggers the alert
-                let duplicateSheet = questBoard.tapAddQuest()
-                duplicateSheet
-                    .typeTitle("Morning Walk")
-                    .toggleCategory("Strength")
-                duplicateSheet.tapSave()
-                
-                print(app.debugDescription)
-                XCTAssertTrue(duplicateSheet.invalidQuestAlertOKButton.waitForExistence(timeout: 2.0), "Duplicate quest alert should be visible")
-                duplicateSheet.invalidQuestAlertOKButton.tap()
-                duplicateSheet.tapCancel()
+        let duplicateSheet = questBoard.tapAddQuest()
+        duplicateSheet
+            .typeTitle("Morning Walk")
+            .toggleCategory("Strength")
+        duplicateSheet.tapSave()
+        
+        print(app.debugDescription)
+        XCTAssertTrue(duplicateSheet.invalidQuestAlertOKButton.waitForExistence(timeout: 2.0), "Duplicate quest alert should be visible")
+        duplicateSheet.invalidQuestAlertOKButton.tap()
+        duplicateSheet.tapCancel()
     }
- 
-    // MARK: - Test 4: Happy Path (Create Quest & View Details)
-        func testCreateQuest_AppearsOnBoardAndOpensDetails() {
-            app.launchArguments.append("-UITest_DefaultState")
-            app.launch()
-            
-            let questBoard = DashboardPage(app: app).navigateToQuestBoard()
-            let title = "Read 20 Pages"
-            
-            questBoard.tapAddQuest()
-                .typeTitle(title)
-                .toggleCategory("Intelligence")
-                .tapSave()
-            
-            // Verify row appears, then open Detail Sheet
-            XCTAssertTrue(questBoard.questRow(forQuest: title).waitForExistence(timeout: 2.0))
-            let detailSheet = questBoard.tapQuestRow(forQuest: title)
-            
-            XCTAssertTrue(detailSheet.closeButton.waitForExistence(timeout: 2.0), "Detail sheet should open.")
-            detailSheet.tapClose()
-            
-            XCTAssertTrue(questBoard.navigationTitle.waitForExistence(timeout: 2.0), "Should return to Quest Board.")
-        }
     
+    // MARK: - Test 4: Happy Path (Create Quest & View Details)
+    func testCreateQuest_AppearsOnBoardAndOpensDetails() {
+        app.launchArguments.append("-UITest_DefaultState")
+        app.launch()
+        
+        let questBoard = DashboardPage(app: app).navigateToQuestBoard()
+        let title = "Read 20 Pages"
+        
+        questBoard.tapAddQuest()
+            .typeTitle(title)
+            .toggleCategory("Intelligence")
+            .tapSave()
+        
+        // Verify row appears, then open Detail Sheet
+        XCTAssertTrue(questBoard.questRow(forQuest: title).waitForExistence(timeout: 2.0))
+        let detailSheet = questBoard.tapQuestRow(forQuest: title)
+        
+        XCTAssertTrue(detailSheet.closeButton.waitForExistence(timeout: 2.0), "Detail sheet should open.")
+        detailSheet.tapClose()
+        
+        XCTAssertTrue(questBoard.navigationTitle.waitForExistence(timeout: 2.0), "Should return to Quest Board.")
+    }
+    
+    // MARK: - Test 5: Conditional UI (Modifying Dates)
+    func testChangeDateToggles_RevealDatePickers() {
+        app.launchArguments.append("-UITest_DefaultState")
+        app.launch()
+        
+        let questBoard = DashboardPage(app: app).navigateToQuestBoard()
+        let addSheet = questBoard.tapAddQuest()
+        let dateSheet = addSheet.tapSetCustomDates()
+        
+        // Pickers should not exist until toggles are switched on
+        XCTAssertFalse(dateSheet.startDatePicker.exists, "Start DatePicker should be hidden initially.")
+        XCTAssertFalse(dateSheet.endDatePicker.exists, "End DatePicker should be hidden initially.")
+        
+        dateSheet.toggleStartDate()
+        XCTAssertTrue(dateSheet.startDatePicker.waitForExistence(timeout: 2.0), "Start DatePicker should appear.")
+        
+        dateSheet.toggleEndDate()
+        XCTAssertTrue(dateSheet.endDatePicker.waitForExistence(timeout: 2.0), "End DatePicker should appear.")
+        dateSheet.tapSave()
+    }
 }
