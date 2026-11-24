@@ -13,6 +13,7 @@
 		28BCA9113087B9F10075FB68 /* Screenshot 2026-10-20 at 11.00.28 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28BCA9103087B9F10075FB68 /* Screenshot 2026-10-20 at 11.00.28 AM.png */; };
 		28BF9C9230632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28BF9C9130632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png */; };
 		28DECD5D3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DECD5C3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png */; };
+		28F7DE7E30B5F37F0075E4EC /* Screenshot 2026-11-24 at 11.26.16 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F7DE7D30B5F37F0075E4EC /* Screenshot 2026-11-24 at 11.26.16 AM.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		28BCA9103087B9F10075FB68 /* Screenshot 2026-10-20 at 11.00.28 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-10-20 at 11.00.28 AM.png"; sourceTree = "<group>"; };
 		28BF9C9130632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-09-22 at 5.43.49 PM.png"; sourceTree = "<group>"; };
 		28DECD5C3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-09-08 at 10.44.55 AM.png"; sourceTree = "<group>"; };
+		28F7DE7D30B5F37F0075E4EC /* Screenshot 2026-11-24 at 11.26.16 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2026-11-24 at 11.26.16 AM.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -117,6 +119,7 @@
 				28169233307E84D500CABF10 /* Screenshot 2026-10-13 at 11.24.38 AM.png */,
 				28BCA9103087B9F10075FB68 /* Screenshot 2026-10-20 at 11.00.28 AM.png */,
 				288D76B6309A3D4000E020EA /* Screenshot 2026-11-03 at 11.01.18 AM.png */,
+				28F7DE7D30B5F37F0075E4EC /* Screenshot 2026-11-24 at 11.26.16 AM.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -262,6 +265,7 @@
 				28BF9C9230632E2E0061601D /* Screenshot 2026-09-22 at 5.43.49 PM.png in Resources */,
 				28BCA9113087B9F10075FB68 /* Screenshot 2026-10-20 at 11.00.28 AM.png in Resources */,
 				28169234307E84D500CABF10 /* Screenshot 2026-10-13 at 11.24.38 AM.png in Resources */,
+				28F7DE7E30B5F37F0075E4EC /* Screenshot 2026-11-24 at 11.26.16 AM.png in Resources */,
 				288D76B7309A3D4000E020EA /* Screenshot 2026-11-03 at 11.01.18 AM.png in Resources */,
 				28DECD5D3050576A00F24B3F /* Screenshot 2026-09-08 at 10.44.55 AM.png in Resources */,
 			);
