@@ -50,7 +50,29 @@ final class QuestBoardUITests: XCTestCase {
                 XCTAssertTrue(duplicateSheet.invalidQuestAlertOKButton.waitForExistence(timeout: 2.0), "Duplicate quest alert should be visible")
                 duplicateSheet.invalidQuestAlertOKButton.tap()
                 duplicateSheet.tapCancel()
-        
     }
+ 
+    // MARK: - Test 4: Happy Path (Create Quest & View Details)
+        func testCreateQuest_AppearsOnBoardAndOpensDetails() {
+            app.launchArguments.append("-UITest_DefaultState")
+            app.launch()
+            
+            let questBoard = DashboardPage(app: app).navigateToQuestBoard()
+            let title = "Read 20 Pages"
+            
+            questBoard.tapAddQuest()
+                .typeTitle(title)
+                .toggleCategory("Intelligence")
+                .tapSave()
+            
+            // Verify row appears, then open Detail Sheet
+            XCTAssertTrue(questBoard.questRow(forQuest: title).waitForExistence(timeout: 2.0))
+            let detailSheet = questBoard.tapQuestRow(forQuest: title)
+            
+            XCTAssertTrue(detailSheet.closeButton.waitForExistence(timeout: 2.0), "Detail sheet should open.")
+            detailSheet.tapClose()
+            
+            XCTAssertTrue(questBoard.navigationTitle.waitForExistence(timeout: 2.0), "Should return to Quest Board.")
+        }
     
 }

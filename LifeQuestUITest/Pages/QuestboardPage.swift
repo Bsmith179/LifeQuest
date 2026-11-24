@@ -16,7 +16,7 @@ struct QuestBoardPage {
     
     // MARK: - Dynamic Row Locators
     func questRow(forQuest title: String) -> XCUIElement {
- app.otherElements["QuestRowBaseInfo_\(title)"]
+        app.staticTexts["QuestRowBaseInfo_\(title)"].firstMatch
 }
  
     func completeButton(forQuest title: String) -> XCUIElement { app.buttons["CompleteButton_\(title)"]
