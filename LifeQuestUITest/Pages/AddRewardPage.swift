@@ -53,7 +53,7 @@ struct AddRewardPage {
  
     var duplicateRewardAlertOKButton: XCUIElement {
  
-        app.buttons["DuplicateRewardOKButton"]
+        app.buttons["DuplicateRewardOKButton"].firstMatch
  
     }
  
@@ -76,7 +76,7 @@ struct AddRewardPage {
     @discardableResult
     func incrementCost(times: Int = 1)-> AddRewardPage {
  
-        let incrementButton = costStepper.buttons["Increment"]
+        let incrementButton = costStepper.buttons.element(boundBy: 1)
  
         for _ in 0..<times {
  

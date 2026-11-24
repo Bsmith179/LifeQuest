@@ -9,8 +9,6 @@
 import XCTest
 
 
-
-
 struct ShopPage{
     
     let app: XCUIApplication
@@ -37,7 +35,7 @@ struct ShopPage{
     
     var availableGoldLabel: XCUIElement {
         
-        app.staticTexts.containing(NSPredicate(format: "label BEGINSWITH 'Abailable Gold:'")).firstMatch
+        app.staticTexts.containing(NSPredicate(format: "label BEGINSWITH 'Available Gold:'")).firstMatch
         
     }
     
@@ -83,6 +81,12 @@ struct ShopPage{
         return self
         
     }
+    
+    @discardableResult
+        func tapInsufficientGoldOK() -> ShopPage{
+            insufficientGoldAlertOKButton.firstMatch.tap()
+            return self
+        }
     
     @discardableResult
     func tapBackToDashboard() -> DashboardPage {
