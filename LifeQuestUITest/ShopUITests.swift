@@ -55,4 +55,33 @@ final class ShopUITests: XCTestCase {
         XCTAssertEqual(shop.availableGoldLabel.label, "Available Gold: 0")
     }
     
+    // MARK: - Test 8: End-to-End Golden Path (Earn Gold -> Spend Gold)
+    func testGoldenPath_CompletingQuestFundsRewardPurchase() {
+        app.launchArguments.append("-UITest_MockActiveQuest")
+        app.launch()
+        
+        let dashboard = DashboardPage(app: app)
+        
+        // 1. Complete the mock quest to earn gold
+        let questBoard = dashboard.navigateToQuestBoard()
+        questBoard.tapComplete(forQuest: "Test Quest")
+        questBoard.tapBackToDashboard()
+        
+        // 2. Verify Dashboard reflects the earned gold (no longer 0)
+        XCTAssertNotEqual(dashboard.goldLabel.label, "Gold: 0", "Gold should increase after completing a quest.")
+        
+        // 3. Navigate to Shop, create an affordable 10 Gold reward, and buy it
+        let shop = dashboard.navigateToShop()
+        let goldBeforePurchase = shop.availableGoldLabel.label
+        
+        shop.tapAddReward()
+            .typeTitle("Quick Break")
+            .tapSave()
+        
+        shop.tapBuy(forReward: "Quick Break")
+        
+        // 4. Verify purchase succeeded (no alert, gold label updated)
+        XCTAssertFalse(shop.insufficientGoldAlertOKButton.exists, "Should have enough gold to buy a 10 Gold reward.")
+        XCTAssertNotEqual(shop.availableGoldLabel.label, goldBeforePurchase, "Available gold should decrease after purchase.")
+    }
 }
