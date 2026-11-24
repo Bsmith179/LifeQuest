@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
- 
+
 @main
 struct LifeQuestApp: App {
     @StateObject private var characterVM = CharacterViewModel()
@@ -24,7 +24,8 @@ struct LifeQuestApp: App {
                 .onAppear {
                     // 1. Wipe data for a clean testing slate
                     if CommandLine.arguments.contains("-UITest_DefaultState") ||
-                       CommandLine.arguments.contains("-UITest_MockActiveQuest") {
+                        CommandLine.arguments.contains("-UITest_MockActiveQuest") ||
+                        CommandLine.arguments.contains("-UITest_MockAbandonedQuest") {
                         
                         questVM.activeQuests.removeAll()
                         shopVM.availableRewards.removeAll()
@@ -45,12 +46,28 @@ struct LifeQuestApp: App {
                             endDate: Calendar.current.date(byAdding: .day, value: 1, to: Date())
                         )
                     }
+                    
+                    if CommandLine.arguments.contains("-UITest_MockAbandonedQuest") {
+                        questVM.createNewQuest(
+                            title: "Test Quest",
+                            categories: [.strength],
+                            difficulty: 1.0,
+                            frequency: .daily,
+                            startDate: Date(),
+                            endDate: Calendar.current.date(byAdding: .day, value: 2, to: Date())!
+                        )
+                        
+                        if !questVM.activeQuests.isEmpty {
+                            questVM.activeQuests[0].startDate = Calendar.current.date(byAdding: .day, value: -11, to: Date())!
+                            questVM.activeQuests[0].status = .abandoned
+                        }
+                    }
                 }
         }
         .onChange(of: scenePhase) { oldPhase, newPhase in
             // Protect real save files from being overwritten by robotic test data
             let isUITesting = CommandLine.arguments.contains("-UITest_DefaultState") ||
-                              CommandLine.arguments.contains("-UITest_MockActiveQuest")
+            CommandLine.arguments.contains("-UITest_MockActiveQuest")
             
             switch newPhase {
             case .active:

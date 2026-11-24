@@ -65,4 +65,10 @@ struct QuestBoardPage {
         questRow(forQuest: title).tap()
         return QuestDetailPage(app: app)
     }
+    
+    @discardableResult
+    func tapBackToDashboard() -> DashboardPage {
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        return DashboardPage(app: app)
+    }
 }

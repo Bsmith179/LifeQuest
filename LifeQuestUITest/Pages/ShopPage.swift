@@ -74,7 +74,6 @@ struct ShopPage{
     
     
     @discardableResult
-    
     func tapBuy(forReward title: String)->ShopPage{
         
         let button = buyButton(forReward: title)
@@ -83,5 +82,11 @@ struct ShopPage{
         
         return self
         
+    }
+    
+    @discardableResult
+    func tapBackToDashboard() -> DashboardPage {
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        return DashboardPage(app: app)
     }
 }

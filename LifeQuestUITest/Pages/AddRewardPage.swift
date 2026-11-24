@@ -62,7 +62,6 @@ struct AddRewardPage {
     //MARK: - Actions
  
     @discardableResult
- 
     func typeTitle(_ title: String) -> AddRewardPage {
  
         titleField.tap()
@@ -74,9 +73,7 @@ struct AddRewardPage {
     }
  
     
- 
     @discardableResult
- 
     func incrementCost(times: Int = 1)-> AddRewardPage {
  
         let incrementButton = costStepper.buttons["Increment"]
@@ -89,12 +86,11 @@ struct AddRewardPage {
  
         return self
  
-        
  
     }
  
     
- 
+    @discardableResult
     func tapSave()->ShopPage {
  
         saveButton.tap()
@@ -104,7 +100,7 @@ struct AddRewardPage {
     }
  
     
- 
+    @discardableResult
     func tapCancel()-> ShopPage {
  
         cancelButton.tap()
@@ -116,7 +112,6 @@ struct AddRewardPage {
     
  
     @discardableResult
- 
     func tapDuplicateAlertOK()-> AddRewardPage {
  
         duplicateRewardAlertOKButton.tap()
