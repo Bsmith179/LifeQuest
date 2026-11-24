@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "3C763937-0884-41EE-BA40-D1ADFED1B7D4",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testInteropMode" : "complete",
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LifeQuest.xcodeproj",
+        "identifier" : "288D791630ACA63500E020EA",
+        "name" : "LifeQuestUITest"
+      }
+    }
+  ],
+  "version" : 1
+}

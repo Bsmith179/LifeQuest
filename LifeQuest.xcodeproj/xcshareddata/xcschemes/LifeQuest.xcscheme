@@ -33,6 +33,9 @@
             reference = "container:LifeQuestNoUI.xctestplan"
             default = "YES">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:LifeQuestUITest/UITest.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference

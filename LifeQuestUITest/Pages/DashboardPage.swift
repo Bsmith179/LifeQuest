@@ -17,11 +17,11 @@ struct DashboardPage {
     var levelLabel: XCUIElement { app.staticTexts.containing(NSPredicate(format: "label BEGINSWITH 'Level:'")).firstMatch }
     var goldLabel: XCUIElement { app.staticTexts.containing(NSPredicate(format: "label BEGINSWITH 'Gold:'")).firstMatch }
     
-    var xpMeter: XCUIElement { app.otherElements["XP"] }
-    var strengthMeter: XCUIElement { app.otherElements["Strength"] }
-    var focusMeter: XCUIElement { app.otherElements["Focus"] }
-    var intelligenceMeter: XCUIElement { app.otherElements["Intelligence"] }
-    var charismaMeter: XCUIElement { app.otherElements["Charisma"] }
+    var xpMeter: XCUIElement { app.staticTexts["XP"] }
+    var strengthMeter: XCUIElement { app.staticTexts["Strength"] }
+    var focusMeter: XCUIElement { app.staticTexts["Focus"] }
+    var intelligenceMeter: XCUIElement { app.staticTexts["Intelligence"] }
+    var charismaMeter: XCUIElement { app.staticTexts["Charisma"] }
     
     // MARK: - Actions
     @discardableResult
