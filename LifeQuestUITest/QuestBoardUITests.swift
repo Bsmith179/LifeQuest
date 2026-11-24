@@ -95,4 +95,31 @@ final class QuestBoardUITests: XCTestCase {
         XCTAssertTrue(dateSheet.endDatePicker.waitForExistence(timeout: 2.0), "End DatePicker should appear.")
         dateSheet.tapSave()
     }
+    
+    // MARK: - Test 6: Lifecycle Transitions (Recommit & Abandon)
+    func testQuestLifecycle_RecommitOpensDateSheetAndAbandonRemovesQuest() {
+        app.launchArguments.append("-UITest_MockAbandonedQuest")
+        app.launch()
+        
+        let questBoard = DashboardPage(app: app).navigateToQuestBoard()
+        let mockTitle = "Test Quest"
+        
+        // 1. Recommit -> Opens ChangeDatePage, then Cancel returns to Quest Board
+        let dateSheet = questBoard.tapRecommit(forQuest: mockTitle)
+        XCTAssertTrue(dateSheet.cancelButton.waitForExistence(timeout: 2.0),
+                      "Recommit should open ChangeDatePage.")
+        dateSheet.tapCancel()
+        
+        XCTAssertTrue(questBoard.navigationTitle.waitForExistence(timeout: 2.0),
+                      "Should return to Quest Board after canceling.")
+        
+        
+        // 2. Abandon -> Quest disappears from the active list
+        questBoard.tapAbandon(forQuest: mockTitle)
+        XCTAssertFalse(questBoard.completeButton(forQuest: mockTitle).exists,
+                       "Complete button should disappear after abandoning.")
+        XCTAssertFalse(questBoard.recommitButton(forQuest: mockTitle).exists,
+                       "Recommit button should disappear after abandoning.")
+        
+    }
 }

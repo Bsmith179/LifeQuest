@@ -45,9 +45,9 @@ struct QuestBoardPage {
     }
     
     @discardableResult
-    func tapRecommit(forQuest title: String) -> QuestBoardPage {
+    func tapRecommit(forQuest title: String) -> ChangeDatePage {
         recommitButton(forQuest: title).tap()
-        return self
+        return ChangeDatePage(app:app)
     }
     
     // MARK: - Navigation Actions
