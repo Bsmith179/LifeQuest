@@ -47,7 +47,7 @@ final class DashboardUITests: XCTestCase {
         XCTAssertTrue(questBoard.navigationTitle.waitForExistence(timeout: 2.0), "Quest Board navigation title not found")
         questBoard.tapBackToDashboard()
         
-        //        Navigate to Shop and back
+        //Navigate to Shop and back
         let shop = dashboard.navigateToShop()
         XCTAssertTrue(shop.navigationTitle.waitForExistence(timeout: 2.0), "Shop navigation title not found")
         shop.tapBackToDashboard()
