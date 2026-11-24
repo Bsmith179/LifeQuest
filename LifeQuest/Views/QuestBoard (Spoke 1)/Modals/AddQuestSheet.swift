@@ -133,7 +133,7 @@ struct AddQuestSheet: View {
                     .accessibilityIdentifier("SaveAddQuestButton")
                     .alert("Invalid Quest", isPresented: $showValidationError){
                         Button("OK", role: .cancel){}
-                            .accessibilityIdentifier("InvalidQuestOKButton")
+                            .accessibilityIdentifier("InvalidQuestAlertOKButton")
                     } message: {
                         Text("A quest with this title already exists, or the custom dates you provided are invalid for the frequency you selected.")
                     }

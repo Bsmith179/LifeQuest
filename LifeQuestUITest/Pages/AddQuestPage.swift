@@ -68,7 +68,7 @@ struct AddQuestPage {
     
     var invalidQuestAlertOKButton: XCUIElement {
         
-        app.buttons["InvalidQuestAlertOKButton"]
+        app.buttons["InvalidQuestAlertOKButton"].firstMatch
         
     }
     
@@ -112,6 +112,27 @@ struct AddQuestPage {
         
         return QuestBoardPage(app: app)
         
+    }
+    
+    //MARK: - Actions
+    @discardableResult
+    func typeTitle(_ title: String) -> AddQuestPage {
+        titleField.tap()
+        titleField.typeText(title)
+        return self
+    }
+    
+    @discardableResult
+    func toggleCategory(_ category: String) -> AddQuestPage {
+        let toggle = categoryToggle(category)
+        let innerSwitch = toggle.switches.firstMatch
+        
+        if innerSwitch.exists {
+            innerSwitch.tap()
+        } else {
+            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        }
+        return self
     }
     
 }
